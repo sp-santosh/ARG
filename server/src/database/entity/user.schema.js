@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, EntitySchema } from "typeorm";
+import { EntitySchema } from "typeorm";
 
 export const UserSchema = new EntitySchema({
   name: "User",

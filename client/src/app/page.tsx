@@ -1,113 +1,225 @@
-import Image from 'next/image'
-
+import Image from "next/image";
+import { Fragment } from "react";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      
+        <html lang="en">
+          <body className="bg-gray-100 font-sans leading-normal tracking-normal">
+            <div className="relative bg-white overflow-hidden">
+              <div className="max-w-7xl mx-auto">
+                <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                  <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div className="sm:text-center lg:text-left">
+                      <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                        <span className="block xl:inline">
+                          Data to enrich your
+                        </span>
+                        <span className="block text-indigo-600 xl:inline">
+                          online business
+                        </span>
+                      </h1>
+                      <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                        Anim aute id magna aliqua ad ad non deserunt sunt. Qui
+                        irure qui lorem cupidatat commodo. Elit sunt amet fugiat
+                        veniam occaecat fugiat aliqua.
+                      </p>
+                      <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                        <div className="rounded-md shadow">
+                          <a
+                            href="#"
+                            className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                          >
+                            Get started
+                          </a>
+                        </div>
+                        <div className="mt-3 sm:mt-0 sm:ml-3">
+                          <a
+                            href="#"
+                            className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+                          >
+                            Live demo
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </main>
+                </div>
+              </div>
+            </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            <div className="py-12 bg-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="lg:text-center">
+                  <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+                    Transactions
+                  </h2>
+                  <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    A better way to send money
+                  </p>
+                  <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                    Lorem ipsum dolor sit amet consect adipisicing elit.
+                    Possimus magnam voluptatum cupiditate veritatis in accusamus
+                    quisquam.
+                  </p>
+                </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+                <div className="mt-10">
+                  <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                    <div className="relative">
+                      <dt>
+                        <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white"></div>
+                        <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
+                          Competitive exchange rates
+                        </p>
+                      </dt>
+                      <dd className="mt-2 ml-16 text-base text-gray-500">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing
+                        elit. Maiores impedit perferendis suscipit eaque, iste
+                        dolor cupiditate blanditiis ratione.
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+            </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+            <div className="py-12 bg-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="lg:text-center">
+                  <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+                    About
+                  </h2>
+                  <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Who we are
+                  </p>
+                  <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                    We are a team of passionate individuals dedicated to
+                    providing the best online experience for our customers. Our
+                    mission is to deliver exceptional service and innovative
+                    solutions.
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+            <footer className="bg-gray-800">
+              <div className="container mx-auto px-6 pt-10 pb-6">
+                <div className="flex flex-wrap">
+                  <div className="w-full md:w-1/4 text-center md:text-left">
+                    <h5 className="uppercase mb-6 font-bold text-white">
+                      Links
+                    </h5>
+                    <ul className="mb-4">
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          FAQ
+                        </a>
+                      </li>
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Help
+                        </a>
+                      </li>
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Support
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="w-full md:w-1/4 text-center md:text-left">
+                    <h5 className="uppercase mb-6 font-bold text-white">
+                      Legal
+                    </h5>
+                    <ul className="mb-4">
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Terms
+                        </a>
+                      </li>
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Privacy
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="w-full md:w-1/4 text-center md:text-left">
+                    <h5 className="uppercase mb-6 font-bold text-white">
+                      Social
+                    </h5>
+                    <ul className="mb-4">
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Facebook
+                        </a>
+                      </li>
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Instagram
+                        </a>
+                      </li>
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Twitter
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="w-full md:w-1/4 text-center md:text-left">
+                    <h5 className="uppercase mb-6 font-bold text-white">
+                      Company
+                    </h5>
+                    <ul className="mb-4">
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          About Us
+                        </a>
+                      </li>
+                      <li className="mt-2">
+                        <a
+                          href="#"
+                          className="text-gray-600 hover:text-gray-200 hover:underline"
+                        >
+                          Careers
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </body>
+        </html>
+      
+    </>
+  );
 }
