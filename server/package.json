@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "start": "node ./src/server.js",
-    "migration:generate": "typeorm migration:generate -d ./src/datasource.js -p",
-    "migrate": "typeorm migration:run -d ./src/datasource.js"
+    "migration:generate": "typeorm migration:generate -d ./src/datasource.js --outputJs -p",
+    "migrate": "typeorm migration:run -d ./src/datasource.js",
+    "rollback": "typeorm migration:revert -d ./src/datasource.js"
   },
   "dependencies": {
     "axios": "^1.6.4",

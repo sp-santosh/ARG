@@ -7,6 +7,7 @@ usage(){
             start                   run backend systems
             generate:migration      create migration file
             migrate                 run migration
+            rollback                revert migration
 USAGE
 exit 1
 }
@@ -32,6 +33,11 @@ migrate(){
     docker exec -it node-server npm run migrate
 }
 
+rollback(){
+    echo "RUNNING DATABASE ROLLBACK"
+    docker exec -it node-server npm run rollback
+}
+
 if [ "$1" == "--help" ];
 then
     usage
@@ -47,6 +53,9 @@ else
             ;;
         "migrate")
             migrate
+            ;;
+        "rollback")
+            rollback
             ;;
         *)
             echo "unknown command $1"
