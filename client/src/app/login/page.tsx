@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
+import { login } from "../utils/auth.api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -9,13 +9,8 @@ export default function Login() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      // Here you would encrypt the password before sending
-      const response = await axios.post("http://127.0.0.1:80/api/login", {
-        email,
-        password,
-      });
-      console.log(response.data);
-      // Handle login success (e.g., redirect to a dashboard)
+      await login(email, password);
+      
     } catch (err) {
       console.error(err);
       // Handle login error (e.g., show an error message)

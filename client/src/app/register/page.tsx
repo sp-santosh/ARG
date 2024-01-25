@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import CryptoJS from "crypto-js";
-
 export default function Register() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
