@@ -1,24 +1,32 @@
 // components/Navbar.tsx
-'use client';
-import Link from 'next/link';
-import useAuth from '../hooks/useAuth'; // Ensure this path is correct
+"use client";
+import Link from "next/link";
+import useAuth from "../hooks/useAuth"; // Ensure this path is correct
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isAuthenticatedUser } = useAuth();
+
+  const router = useRouter();
+
+  const logoutCLick = () => {
+    router.push("/");
+    logout();
+  };
 
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex items-center justify-between">
         <div className="text-white font-bold">
           <Link legacyBehavior href="/">
-            <a>Automatic Routine Generator</a>
+            Automatic Routine Generator
           </Link>
         </div>
         <div>
           <ul className="flex space-x-4">
             <li>
               <Link legacyBehavior href="/about">
-                <a className="text-gray-300 hover:text-white">About</a>
+                About
               </Link>
             </li>
             <li>
@@ -31,13 +39,28 @@ const Navbar = () => {
                 <a className="text-gray-300 hover:text-white">Contact</a>
               </Link>
             </li>
+
+            <li>
+              <button
+                onClick={logoutCLick}
+                className="text-gray-300 hover:text-white"
+              >
+                Logout
+              </button>
+            </li>
+
             {user ? (
               <>
                 <li>
-                  <span className="text-gray-300 hover:text-white">{user.name}</span>
+                  <span className="text-gray-300 hover:text-white">
+                    {user.name}
+                  </span>
                 </li>
                 <li>
-                  <button onClick={logout} className="text-gray-300 hover:text-white">
+                  <button
+                    onClick={logout}
+                    className="text-gray-300 hover:text-white"
+                  >
                     Logout
                   </button>
                 </li>

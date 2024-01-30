@@ -1,16 +1,22 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import isAuth from "../utils/isAuth";
 import { login } from "../utils/auth.api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await login(email, password);
-      
+      const result = await login(email, password);
+
+      if (result) {
+        localStorage.setItem("token", result.token);
+        router.push("/");
+      }
     } catch (err) {
       console.error(err);
       // Handle login error (e.g., show an error message)
