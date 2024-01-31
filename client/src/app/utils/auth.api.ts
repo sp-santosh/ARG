@@ -9,3 +9,10 @@ export const login = async (email: string, password: string) => {
 
   return res.data;
 };
+
+export const fetchTeachers = async () => {
+  const response = await axios.get(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+  return response.data;
+};

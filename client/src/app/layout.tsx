@@ -4,6 +4,8 @@ import "tw-elements-react/dist/css/tw-elements-react.min.css";
 
 import "./globals.css";
 import Navbar from "@/components/Navigation/Navbar";
+
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header>
-          <Navbar />
-        </header>
-        {children}
+        <ReactQueryProvider>
+          <header>
+            <Navbar />
+          </header>
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );
