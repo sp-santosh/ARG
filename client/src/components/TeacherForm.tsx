@@ -1,6 +1,7 @@
 // components/TeacherForm.js
 import { useState } from "react";
 import axios from "axios";
+import { authHttp } from "@/app/utils/http";
 
 function TeacherForm() {
   const [teacher, setTeacher] = useState({
@@ -32,10 +33,12 @@ function TeacherForm() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:80/api/teachers",
-        teacher
-      );
+      const response = await authHttp({
+        url: "/api/teachers",
+        method: "POST",
+        data: teacher,
+      });
+
       alert("Teacher added successfully!");
       console.log(response.data);
       // Reset form or handle success

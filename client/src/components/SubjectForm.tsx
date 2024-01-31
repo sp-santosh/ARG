@@ -1,6 +1,7 @@
 // components/SubjectForm.js
 import { useState } from "react";
 import axios from "axios";
+import { authHttp } from "@/app/utils/http";
 
 function SubjectForm() {
   const [subject, setSubject] = useState({
@@ -17,10 +18,12 @@ function SubjectForm() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:80/api/subjects",
-        subject
-      );
+      const response = await authHttp({
+        url: "/api/subjects",
+        method: "POST",
+        data: subject,
+      });
+
       alert("Subject added successfully!");
       console.log(response.data);
       // Reset form or handle success
