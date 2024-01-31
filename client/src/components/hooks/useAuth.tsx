@@ -1,7 +1,7 @@
 // hooks/useAuth.tsx
 
 "use client";
-import { isTokenValid } from "@/app/utils/isAuth";
+import { getAuthenticatedUser, isTokenValid } from "@/app/utils/isAuth";
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -13,25 +13,16 @@ interface User {
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
 
+  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(false);
+
   useEffect(() => {
     const userInfo = localStorage.getItem("user");
     if (userInfo) {
       setUser(JSON.parse(userInfo));
     }
+
+    setIsAuthenticatedUser(getAuthenticatedUser());
   }, []);
-
-  const getToken = (): string | null => {
-    if (typeof window === "undefined") return null;
-
-    try {
-      const token = localStorage.getItem("token");
-
-      return token;
-    } catch (error) {
-      console.error("Error accessing localStorage:", error);
-      return null;
-    }
-  };
 
   const login = (email: string, name: string) => {
     const userInfo = { email, name };
@@ -44,20 +35,7 @@ const useAuth = () => {
     setUser(null);
   };
 
-  const getAuthenticatedUser = () => {
-    if (typeof window === "undefined") return false;
-
-    const token = getToken();
-
-    const test = isTokenValid(token);
-    console.log(test);
-
-    return isTokenValid(token);
-  };
-
-  const isAuthenticatedUser = getAuthenticatedUser();
-
-  return { user, login, logout, isAuthenticatedUser, getToken };
+  return { user, login, logout, isAuthenticatedUser };
 };
 
 export default useAuth;

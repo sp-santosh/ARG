@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const { user, logout, isAuthenticatedUser } = useAuth();
 
+  console.log({ isAuthenticatedUser });
+
   const router = useRouter();
 
   const logoutCLick = () => {
@@ -29,11 +31,13 @@ const Navbar = () => {
                 About
               </Link>
             </li>
-            <li>
-              <Link legacyBehavior href="/generator">
-                <a className="text-gray-300 hover:text-white">Generator</a>
-              </Link>
-            </li>
+            {isAuthenticatedUser ? (
+              <li>
+                <Link legacyBehavior href="/generator">
+                  <a className="text-gray-300 hover:text-white">Generator</a>
+                </Link>
+              </li>
+            ) : null}
             <li>
               <Link legacyBehavior href="/contact">
                 <a className="text-gray-300 hover:text-white">Contact</a>
