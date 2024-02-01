@@ -12,7 +12,7 @@ export const login = async (email: string, password: string) => {
 
 export const fetchTeachers = async () => {
   const response = await axios.get(
-    "https://jsonplaceholder.typicode.com/users"
+    "http://127.0.0.1:80/api/teachers",
   );
   return response.data;
 };

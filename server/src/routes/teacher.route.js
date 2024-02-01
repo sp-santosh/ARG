@@ -8,3 +8,7 @@ const teacherController = new TeacherController();
 teacherRouter.post("/",authenticate, teacherController.saveTeacher);
 
 teacherRouter.get("/:id", teacherController.getTeacherById);
+
+teacherRouter.put("/:id", authenticate, teacherController.putTeacher);
+
+teacherRouter.delete("/:id", authenticate, teacherController.deleteTeacher)

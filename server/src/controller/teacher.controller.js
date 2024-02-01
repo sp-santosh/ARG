@@ -30,4 +30,29 @@ export class TeacherController {
         res.status(500).json({ message: err.message });
       }
   }
+  async putTeacher(req, res) {
+    try {
+      const teacher = req.body;
+      await new TeacherRepository().saveTeacher(teacher);
+      res.status(200).json({
+        message: "Teacher created successfully!",
+      });
+    } catch (err) {
+      console.error("Error object:", err);
+      res.status(500).json({ message: "Error adding teacher." });
+    }
+  }
+
+  async deleteTeacher(req, res) {
+    try {
+      await new TeacherRepository().deleteTeacher(req.params.id);
+      res.status(200).json({
+        message: "Teacher deleted successfully!",
+      });
+    } catch (err) {
+      console.error("Error object:", err);
+      res.status(500).json({ message: "Error deleting teacher." });
+    }
+  }
 }
+
