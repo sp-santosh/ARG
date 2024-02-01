@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const baseUrl = (process.env.NEXT_PUBLIC_BASEURL as string) ?? "127.0.0.1:80";
+const baseUrl =
+  (process.env.NEXT_PUBLIC_BASEURL as string) ??
+  "https://dbv5756l-80.use2.devtunnels.ms";
 
 const headers = {
   "Content-Type": "application/json",

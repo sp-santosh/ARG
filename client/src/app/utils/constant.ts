@@ -1,5 +1,5 @@
 const config = {
-  backend_url: "http://127.0.0.1:80",
+  backend_url: "https://dbv5756l-80.use2.devtunnels.ms",
 };
 
 export const url = {

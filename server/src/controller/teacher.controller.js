@@ -31,6 +31,7 @@ export class TeacherController {
       }
   }
   async putTeacher(req, res) {
+    // TODO FIND AND UPDATE
     try {
       const teacher = req.body;
       await new TeacherRepository().saveTeacher(teacher);

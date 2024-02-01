@@ -1,10 +1,12 @@
 "use client";
 import { useQuery } from "react-query";
 import { fetchTeachers } from "../utils/auth.api";
+import { useRouter } from "next/navigation";
 
 type teacher = {
+  id: string;
   name: string;
-  shortName:string;
+  shortName: string;
   address: string;
   type: string;
   specialization: string;
@@ -18,6 +20,8 @@ const TeachersListing = () => {
     isLoading,
     isError,
   } = useQuery("teacher", fetchTeachers);
+
+  const { push } = useRouter();
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -67,7 +71,10 @@ const TeachersListing = () => {
 
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-primary">
+                      <button
+                        className="hover:text-primary"
+                        onClick={() => push(`/teachers/${teacher.id}`)}
+                      >
                         <svg
                           className="fill-current"
                           width="18"

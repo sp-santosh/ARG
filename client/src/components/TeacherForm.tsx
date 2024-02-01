@@ -1,13 +1,10 @@
 // components/TeacherForm.js
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { authHttp } from "@/app/utils/http";
-import {
-  fetchTeachers,
-  fetchTeachersById,
-  getProduct,
-} from "@/app/utils/auth.api";
+import { fetchTeachersById } from "@/app/utils/auth.api";
 import { useQuery } from "react-query";
+import { useParams, useRouter } from "next/navigation";
 
 function TeacherForm() {
   const [teacher, setTeacher] = useState({
@@ -32,12 +29,41 @@ function TeacherForm() {
     friEndTime: "",
   });
 
+  const params = useParams();
+
   const {
     data: teachersDetails,
     isLoading,
     isError,
-  } = useQuery(["teacheredit", { id: 1 }], fetchTeachersById);
+  } = useQuery(["teacheredit", { id: params.id }], fetchTeachersById, {
+    enabled: !!params.id,
+  });
 
+  useEffect(() => {
+    if (teachersDetails) {
+      setTeacher({
+        name: teachersDetails.name,
+        shortName: teachersDetails.shortName,
+        address: teachersDetails.address,
+        phoneNumber: teachersDetails.phoneNumber,
+        type: teachersDetails.type,
+        specialization: teachersDetails.specialization,
+        code: teachersDetails.code,
+        sunStartTime: teachersDetails.sunStartTime,
+        sunEndTime: teachersDetails.sunEndTime,
+        monStartTime: teachersDetails.monStartTime,
+        monEndTime: teachersDetails.monEndTime,
+        tueStartTime: teachersDetails.tueStartTime,
+        tueEndTime: teachersDetails.tueEndTime,
+        wedStartTime: teachersDetails.wedStartTime,
+        wedEndTime: teachersDetails.wedEndTime,
+        thurStartTime: teachersDetails.thurStartTime,
+        thurEndTime: teachersDetails.thurEndTime,
+        friStartTime: teachersDetails.friStartTime,
+        friEndTime: teachersDetails.friEndTime,
+      });
+    }
+  }, [teachersDetails]);
 
   const handleChange = (e: any) => {
     setTeacher({ ...teacher, [e.target.name]: e.target.value });
@@ -47,8 +73,8 @@ function TeacherForm() {
     e.preventDefault();
     try {
       const response = await authHttp({
-        url: "/api/teachers",
-        method: "POST",
+        url: params.id ? `/api/teachers/${params.id}` : "/api/teachers",
+        method: params.id ? "PUT" : "POST",
         data: teacher,
       });
 
@@ -433,7 +459,7 @@ function TeacherForm() {
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
-          Add Teacher
+          {params.id ? "UPDATE TEACHER" : "ADD TEACHER"}
         </button>
       </div>
     </form>
