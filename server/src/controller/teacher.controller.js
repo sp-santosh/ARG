@@ -54,5 +54,14 @@ export class TeacherController {
       res.status(500).json({ message: "Error deleting teacher." });
     }
   }
+
+  async getTeachers(req, res) {
+    try {
+      const teachers = await new TeacherRepository().findAllTeachers();
+      res.status(200).json(teachers);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
 }
 

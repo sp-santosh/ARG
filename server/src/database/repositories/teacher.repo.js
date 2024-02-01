@@ -13,6 +13,10 @@ async findTeacherById(id) {
 async findTeacherByName(name) {
   return teacherRepository.findOne({ where: { name } });
 }
+
+async findAllTeachers() {
+  return teacherRepository.find();
+}
 }
 
 

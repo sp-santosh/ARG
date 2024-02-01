@@ -2,6 +2,12 @@
 import { useState } from "react";
 import axios from "axios";
 import { authHttp } from "@/app/utils/http";
+import {
+  fetchTeachers,
+  fetchTeachersById,
+  getProduct,
+} from "@/app/utils/auth.api";
+import { useQuery } from "react-query";
 
 function TeacherForm() {
   const [teacher, setTeacher] = useState({
@@ -25,6 +31,13 @@ function TeacherForm() {
     friStartTime: "",
     friEndTime: "",
   });
+
+  const {
+    data: teachersDetails,
+    isLoading,
+    isError,
+  } = useQuery(["teacheredit", { id: 1 }], fetchTeachersById);
+
 
   const handleChange = (e: any) => {
     setTeacher({ ...teacher, [e.target.name]: e.target.value });

@@ -11,8 +11,13 @@ export const login = async (email: string, password: string) => {
 };
 
 export const fetchTeachers = async () => {
-  const response = await axios.get(
-    "http://127.0.0.1:80/api/teachers",
-  );
+  const response = await axios.get("http://127.0.0.1:80/api/teachers");
+  return response.data;
+};
+
+export const fetchTeachersById = async ({ queryKey }: { queryKey: any }) => {
+  const [, data] = queryKey;
+  const response = await axios.get(`http://127.0.0.1:80/api/teachers/${data.id}`);
+
   return response.data;
 };

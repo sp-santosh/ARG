@@ -4,7 +4,7 @@ import { fetchTeachers } from "../utils/auth.api";
 
 type teacher = {
   name: string;
-  shortname:string;
+  shortName:string;
   address: string;
   type: string;
   specialization: string;
@@ -55,7 +55,7 @@ const TeachersListing = () => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">
-                      {teacher.shortname}
+                      {teacher.shortName}
                     </p>
                   </td>
 
