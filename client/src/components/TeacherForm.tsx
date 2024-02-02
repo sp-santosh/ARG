@@ -75,7 +75,7 @@ function TeacherForm() {
       const response = await authHttp({
         url: params.id ? `/api/teachers/${params.id}` : "/api/teachers",
         method: params.id ? "PUT" : "POST",
-        data: teacher,
+        data: params.id ? { ...teacher, id: params.id } : teacher,
       });
 
       alert("Teacher added successfully!");

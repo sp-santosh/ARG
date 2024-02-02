@@ -1,5 +1,5 @@
 const config = {
-  backend_url: "https://dbv5756l-80.use2.devtunnels.ms",
+  backend_url: `${process.env.NEXT_PUBLIC_API_URL}`,
 };
 
 export const url = {

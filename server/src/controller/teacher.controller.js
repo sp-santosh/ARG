@@ -22,19 +22,20 @@ export class TeacherController {
 
   async getTeacherById(req, res) {
     try {
-        const teacher = await new TeacherRepository().findTeacherById(
-          req.params.id
-        );
-        res.status(200).json(teacher);
-      } catch (err) {
-        res.status(500).json({ message: err.message });
-      }
+      const teacher = await new TeacherRepository().findTeacherById(
+        req.params.id
+      );
+      res.status(200).json(teacher);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
   }
   async putTeacher(req, res) {
     // TODO FIND AND UPDATE
     try {
       const teacher = req.body;
-      await new TeacherRepository().saveTeacher(teacher);
+
+      await new TeacherRepository().updateTeaher(teacher);
       res.status(200).json({
         message: "Teacher created successfully!",
       });
@@ -65,4 +66,3 @@ export class TeacherController {
     }
   }
 }
-

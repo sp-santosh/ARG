@@ -12,7 +12,7 @@ export const login = async (email: string, password: string) => {
 
 export const fetchTeachers = async () => {
   const response = await axios.get(
-    "https://dbv5756l-80.use2.devtunnels.ms/api/teachers"
+    `${process.env.NEXT_PUBLIC_API_URL}/api/teachers`
   );
   return response.data;
 };
@@ -20,7 +20,7 @@ export const fetchTeachers = async () => {
 export const fetchTeachersById = async ({ queryKey }: { queryKey: any }) => {
   const [, data] = queryKey;
   const response = await axios.get(
-    `https://dbv5756l-80.use2.devtunnels.ms/api/teachers/${data.id}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/teachers/${data.id}`
   );
 
   return response.data;

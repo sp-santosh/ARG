@@ -32,37 +32,28 @@ const Navbar = () => {
               </Link>
             </li>
             {isAuthenticatedUser ? (
-              <li>
-                <Link legacyBehavior href="/generator">
-                  <a className="text-gray-300 hover:text-white">Generator</a>
-                </Link>
-              </li>
-            ) : null}
-            <li>
-              <Link legacyBehavior href="/contact">
-                <a className="text-gray-300 hover:text-white">Contact</a>
-              </Link>
-            </li>
-
-            <li>
-              <button
-                onClick={logoutCLick}
-                className="text-gray-300 hover:text-white"
-              >
-                Logout
-              </button>
-            </li>
-
-            {user ? (
               <>
                 <li>
-                  <span className="text-gray-300 hover:text-white">
-                    {user.name}
-                  </span>
+                  <Link legacyBehavior href="/generator">
+                    <a className="text-gray-300 hover:text-white">Generator</a>
+                  </Link>
                 </li>
+
+                <li>
+                  <Link legacyBehavior href="/teachers">
+                    <a className="text-gray-300 hover:text-white">Teachers</a>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link legacyBehavior href="/subject">
+                    <a className="text-gray-300 hover:text-white">Subjects</a>
+                  </Link>
+                </li>
+
                 <li>
                   <button
-                    onClick={logout}
+                    onClick={logoutCLick}
                     className="text-gray-300 hover:text-white"
                   >
                     Logout
@@ -71,6 +62,12 @@ const Navbar = () => {
               </>
             ) : (
               <>
+                <li>
+                  <Link legacyBehavior href="/contact">
+                    <a className="text-gray-300 hover:text-white">Contact</a>
+                  </Link>
+                </li>
+
                 <li>
                   <Link legacyBehavior href="/login">
                     <a className="text-gray-300 hover:text-white">Login</a>
