@@ -25,3 +25,19 @@ export const fetchTeachersById = async ({ queryKey }: { queryKey: any }) => {
 
   return response.data;
 };
+
+export const fetchSubjects = async () => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/subjects`
+  );
+  return response.data;
+};
+
+export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
+  const [, data] = queryKey;
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/subjects/${data.id}`
+  );
+
+  return response.data;
+};

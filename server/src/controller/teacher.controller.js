@@ -57,7 +57,7 @@ export class TeacherController {
     }
   }
 
-  async getTeachers(req, res) {
+  async getTeacher(req, res) {
     try {
       const teachers = await new TeacherRepository().findAllTeachers();
       res.status(200).json(teachers);

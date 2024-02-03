@@ -1,7 +1,10 @@
-// components/SubjectForm.js
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { authHttp } from "@/app/utils/http";
+import { fetchSubjectsById, fetchTeachersById } from "@/app/utils/auth.api";
+import { useQuery } from "react-query";
+import { useParams, useRouter } from "next/navigation";
 
 function SubjectForm() {
   const [subject, setSubject] = useState({
@@ -10,6 +13,28 @@ function SubjectForm() {
     semester: "",
     code: "",
   });
+
+  const params = useParams();
+
+  const {
+    data: subjectsDetails,
+    isLoading,
+    isError,
+  } = useQuery(["subjectedit", { id: params.id }], fetchSubjectsById, {
+    enabled: !!params.id,
+  });
+
+  useEffect(() => {
+    if (subjectsDetails) {
+      setSubject({
+        name: subjectsDetails.name,
+        faculty: subjectsDetails.faculty,
+        semester: subjectsDetails.semester,
+        code: subjectsDetails.code
+       
+      });
+    }
+  }, [subjectsDetails]);
 
   const handleChange = (e: any) => {
     setSubject({ ...subject, [e.target.name]: e.target.value });
@@ -83,7 +108,7 @@ function SubjectForm() {
           Semester:
         </label>
         <input
-          type="text"
+          type="number"
           id="semester"
           name="semester"
           value={subject.semester}

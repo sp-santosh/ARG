@@ -1,7 +1,7 @@
 // pages/add-teacher.js
 "use client";
-import SubjectForm from "../../components/SubjectForm";
-import isAuth from "../utils/isAuth";
+import SubjectForm from "../../../components/SubjectForm";
+import isAuth from "../../utils/isAuth";
 
 const AddSubject = () => {
   return (

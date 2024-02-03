@@ -5,6 +5,7 @@ import { subjectRouter } from "./subject.route.js";
 
 export const indexRouter = Router();
 
+
 indexRouter.use("/teachers", teacherRouter);
 indexRouter.use("/auth", userRouter);
 indexRouter.use("/subjects", subjectRouter);

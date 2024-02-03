@@ -10,7 +10,7 @@ export default function Register() {
     event.preventDefault();
     try {
       // Send the hashed password instead of the plain one
-      const response = await axios.post("http://127.0.0.1:80/api/register", {
+      const response = await axios.post("http://127.0.0.1:80/api/auth/register", {
         email,
         password,
         userName,

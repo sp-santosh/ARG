@@ -46,7 +46,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link legacyBehavior href="/subject">
+                  <Link legacyBehavior href="/subjects">
                     <a className="text-gray-300 hover:text-white">Subjects</a>
                   </Link>
                 </li>

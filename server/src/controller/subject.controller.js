@@ -30,4 +30,43 @@ export class SubjectController {
       res.status(500).json({ message: err.message });
     }
   }
+
+
+  async putSubject(req, res) {
+    // TODO FIND AND UPDATE
+    try {
+      const subject = req.body;
+
+      await new SubjectRepository().updateSubject(subject);
+      res.status(200).json({
+        message: "Subject created successfully!",
+      });
+    } catch (err) {
+      console.error("Error object:", err);
+      res.status(500).json({ message: "Error adding subject." });
+    }
+  }
+
+  async deleteSubject(req, res) {
+    try {
+      await new SubjectRepository().deleteSubject(req.params.id);
+      res.status(200).json({
+        message: "Subject deleted successfully!",
+      });
+    } catch (err) {
+      console.error("Error object:", err);
+      res.status(500).json({ message: "Error deleting teacher." });
+    }
+  }
+
+  async getSubject(req, res) {
+    try {
+      const teachers = await new SubjectRepository().findAllTSubject();
+      res.status(200).json(teachers);
+    } catch (err) {
+      res.status(500).json({ message: err.message });subject
+
+    }
+
+}
 }
