@@ -20,6 +20,7 @@ export const SubjectSchema = new EntitySchema({
     },
     code: {
       type: "varchar"
+      
     }
   }
 });

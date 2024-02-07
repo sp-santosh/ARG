@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { useParams, useRouter } from "next/navigation";
 
 function TeacherForm() {
+  const router = useRouter();
   const [teacher, setTeacher] = useState({
     name: "",
     shortName: "",
@@ -79,6 +80,7 @@ function TeacherForm() {
       });
 
       alert("Teacher added successfully!");
+      router.push("/teachers");
       console.log(response.data);
       // Reset form or handle success
     } catch (error) {
@@ -207,7 +209,7 @@ function TeacherForm() {
       </div>
 
       {/* Code */}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label
           htmlFor="code"
           className="block text-sm font-medium text-gray-600"
@@ -223,7 +225,7 @@ function TeacherForm() {
           className="mt-1 p-2 border rounded-md w-full"
           required
         />
-      </div>
+      </div> */}
 
       {/* Sunday Start Time */}
       <div className="grid grid-cols-2 gap-4">

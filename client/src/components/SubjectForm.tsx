@@ -1,12 +1,15 @@
 
 import { useEffect, useState } from "react";
+
 import axios from "axios";
 import { authHttp } from "@/app/utils/http";
 import { fetchSubjectsById, fetchTeachersById } from "@/app/utils/auth.api";
 import { useQuery } from "react-query";
 import { useParams, useRouter } from "next/navigation";
 
+
 function SubjectForm() {
+  const router = useRouter();
   const [subject, setSubject] = useState({
     name: "",
     faculty: "",
@@ -50,6 +53,7 @@ function SubjectForm() {
       });
 
       alert("Subject added successfully!");
+      router.push("/subjects");
       console.log(response.data);
       // Reset form or handle success
     } catch (error) {
@@ -119,7 +123,7 @@ function SubjectForm() {
       </div>
 
       {/* Code */}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label
           htmlFor="code"
           className="block text-sm font-medium text-gray-600"
@@ -135,7 +139,7 @@ function SubjectForm() {
           className="mt-1 p-2 border rounded-md w-full"
           required
         />
-      </div>
+      </div> */}
 
       {/* Submit button */}
       <div className="mt-4">

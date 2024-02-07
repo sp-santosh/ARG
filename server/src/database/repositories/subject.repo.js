@@ -1,11 +1,21 @@
 import dataSource from "../../datasource.js";
 
 const subjectRepository = dataSource.getRepository("Subject");
+// Function to convert integer to binary
+function intToBinary(n) {
+  return n.toString(2);
+}
+
 
 export class SubjectRepository {
   async saveSubject(subject) {
-    await subjectRepository.save(subject);
-  }
+    
+    const test = await subjectRepository.save({...subject,code:"-"});
+    const binaryCode=intToBinary(test.id);
+
+    console.log({test,binaryCode});
+    await subjectRepository.update(Number(test.id), {...subject,code:binaryCode});
+      }
   async updateSubject(subject) {
     const subjectFound = await subjectRepository.findOne({
       where: { id: subject.id },

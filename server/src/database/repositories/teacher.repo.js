@@ -1,9 +1,16 @@
 import dataSource from "../../datasource.js";
 const teacherRepository = dataSource.getRepository("Teacher");
-
+// Function to convert integer to binary
+function intToBinary(n) {
+  return n.toString(2);
+}
 export class TeacherRepository {
   async saveTeacher(teacher) {
-    await teacherRepository.save(teacher);
+    const test = await teacherRepository.save({...teacher,code:"-"});
+    const binaryCode=intToBinary(test.id);
+
+    console.log({test,binaryCode});
+    await teacherRepository.update(Number(test.id), {...teacher,code:binaryCode});
   }
 
   async updateTeaher(teacher) {
