@@ -17,16 +17,11 @@ export default function Home() {
                   <div className="sm:text-center lg:text-left">
                     <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                       <span className="block xl:inline">
-                        Data to enrich your
-                      </span>
-                      <span className="block text-indigo-600 xl:inline">
-                        online business
+                        Automatic Routine Generator for Colleges
                       </span>
                     </h1>
                     <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                      Anim aute id magna aliqua ad ad non deserunt sunt. Qui
-                      irure qui lorem cupidatat commodo. Elit sunt amet fugiat
-                      veniam occaecat fugiat aliqua.
+                      Welcome to the Routine Generator Dashboard. This tool utilizes genetic algorithms to automatically create optimized routines for colleges based on various constraints and preferences.
                     </p>
                     <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                       <div className="rounded-md shadow">
@@ -34,7 +29,7 @@ export default function Home() {
                           href="#"
                           className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                         >
-                          Get started
+                          Get Started
                         </a>
                       </div>
                       <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -42,7 +37,7 @@ export default function Home() {
                           href="#"
                           className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
                         >
-                          Live demo
+                          Learn More
                         </a>
                       </div>
                     </div>
@@ -56,14 +51,13 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="lg:text-center">
                 <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-                  Transactions
+                  Features
                 </h2>
                 <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                  A better way to send money
+                  What the Routine Generator Offers
                 </p>
                 <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                  Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-                  magnam voluptatum cupiditate veritatis in accusamus quisquam.
+                  The Routine Generator provides the following key features:
                 </p>
               </div>
 
@@ -73,34 +67,25 @@ export default function Home() {
                     <dt>
                       <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white"></div>
                       <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                        Competitive exchange rates
+                        Feature 1: Genetic Algorithm Optimization
                       </p>
                     </dt>
                     <dd className="mt-2 ml-16 text-base text-gray-500">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Maiores impedit perferendis suscipit eaque, iste dolor
-                      cupiditate blanditiis ratione.
+                      The generator uses genetic algorithms to efficiently optimize college routines, ensuring they meet various criteria and constraints.
+                    </dd>
+                  </div>
+                  <div className="relative">
+                    <dt>
+                      <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white"></div>
+                      <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
+                        Feature 2: Custom Constraints and Preferences
+                      </p>
+                    </dt>
+                    <dd className="mt-2 ml-16 text-base text-gray-500">
+                      Users can specify custom constraints and preferences, such as class timings, teacher availability, and room allocations, to tailor the generated routines according to their needs.
                     </dd>
                   </div>
                 </dl>
-              </div>
-            </div>
-          </div>
-
-          <div className="py-12 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="lg:text-center">
-                <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-                  About
-                </h2>
-                <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                  Who we are
-                </p>
-                <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                  We are a team of passionate individuals dedicated to providing
-                  the best online experience for our customers. Our mission is
-                  to deliver exceptional service and innovative solutions.
-                </p>
               </div>
             </div>
           </div>
@@ -154,37 +139,6 @@ export default function Home() {
                         className="text-gray-600 hover:text-gray-200 hover:underline"
                       >
                         Privacy
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="w-full md:w-1/4 text-center md:text-left">
-                  <h5 className="uppercase mb-6 font-bold text-white">
-                    Social
-                  </h5>
-                  <ul className="mb-4">
-                    <li className="mt-2">
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-200 hover:underline"
-                      >
-                        Facebook
-                      </a>
-                    </li>
-                    <li className="mt-2">
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-200 hover:underline"
-                      >
-                        Instagram
-                      </a>
-                    </li>
-                    <li className="mt-2">
-                      <a
-                        href="#"
-                        className="text-gray-600 hover:text-gray-200 hover:underline"
-                      >
-                        Twitter
                       </a>
                     </li>
                   </ul>
