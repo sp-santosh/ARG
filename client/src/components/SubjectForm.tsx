@@ -86,41 +86,49 @@ function SubjectForm() {
 
       {/* Faculty */}
       <div className="mb-4">
-        <label
-          htmlFor="faculty"
-          className="block text-sm font-medium text-gray-600"
-        >
-          Faculty:
-        </label>
-        <input
-          type="text"
-          id="faculty"
-          name="faculty"
-          value={subject.faculty}
-          onChange={handleChange}
-          className="mt-1 p-2 border rounded-md w-full"
-          required
-        />
-      </div>
+  <label
+    htmlFor="faculty"
+    className="block text-sm font-medium text-gray-600"
+  >
+    Faculty:
+  </label>
+  <select
+    id="faculty"
+    name="faculty"
+    value={subject.faculty}
+    onChange={handleChange}
+    className="mt-1 p-2 border rounded-md w-full"
+    required
+  >
+    <option value="BCS">BCS</option>
+    <option value="BCU">BCU</option>
+  </select>
+</div>
 
       {/* Semester */}
       <div className="mb-4">
-        <label
-          htmlFor="semester"
-          className="block text-sm font-medium text-gray-600"
-        >
-          Semester:
-        </label>
-        <input
-          type="number"
-          id="semester"
-          name="semester"
-          value={subject.semester}
-          onChange={handleChange}
-          className="mt-1 p-2 border rounded-md w-full"
-          required
-        />
-      </div>
+  <label
+    htmlFor="semester"
+    className="block text-sm font-medium text-gray-600"
+  >
+    Semester:
+  </label>
+  <select
+  id="semester"
+  name="semester"
+  value={subject.semester}
+  onChange={handleChange}
+  className="mt-1 p-2 border rounded-md w-full"
+  required
+>
+  {Array.from({ length: 6 }, (_, index) => (
+    <option key={index + 1} value={index + 1}>
+      {index + 1}
+    </option>
+  ))}
+</select>
+</div>
+
 
       {/* Code */}
       {/* <div className="mb-4">
