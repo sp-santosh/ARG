@@ -12,15 +12,19 @@ export const ChromosomeSchema = new EntitySchema({
     },
     fitness: {
       type: "int",
+      nullable: true,
     },
     chromo: {
       type: "varchar",
+      nullable: true,
     },
     fitnessHard: {
       type: "int",
+      nullable: true,
     },
     fitnessSoft: {
       type: "int",
+      nullable: true,
     },
   },
 });
