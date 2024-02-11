@@ -6,5 +6,6 @@ export const url = {
   login: config.backend_url + "/api/auth/login",
   register: config.backend_url + "/api/auth/register",
   teachers: config.backend_url + "/api/teachers",
-  subjects: config.backend_url+"/api/subjects"
+  subjects: config.backend_url+"/api/subjects",
+  generate: config.backend_url+"/api/generate"
 };

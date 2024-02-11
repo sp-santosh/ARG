@@ -5,7 +5,7 @@ export class FacultyRepository{
         return facultyRepository.findOne({ where: { id } });
       }
 
-    async findByClassName(name){
-        return facultyRepository.findOne({ where : { name }})
+    async findByClassName(className){
+        return facultyRepository.findOne({ where : { className }})
     }
 }
