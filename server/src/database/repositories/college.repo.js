@@ -8,4 +8,16 @@ export class CollegeRepository{
       async findAll(){
         return collegeRepository.find();
       }
+
+      async findByCollegeCode(code){
+        return collegeRepository.findOne({where : { code }});
+      }
+
+      async findByTeacherCode(teacherCode){
+        return collegeRepository.findOne({where : {teacherCode}});
+      }
+
+      async findByTeacherCodeAndSubjectCodeAndFaculty(teacher, subject, faculty){
+        return await collegeRepo.findOne({where : {teacherCode: teacher, subjectCode: subject, faculty: faculty}});
+    }
 }

@@ -3,7 +3,7 @@ import { RoutineController } from "../controller/routine.controller.js";
 import { authenticate } from "../middleware/authentication.js";
 
 export const routineRouter = Router();
-const routineController = new RoutineController();
+let routineController = new RoutineController();
 
 
-routineRouter.get("/", routineController.createChromosome);
+routineRouter.get("/", routineController.createChromosome.bind(routineController));

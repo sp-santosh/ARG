@@ -9,4 +9,12 @@ export class ChromosomeRepository {
     async saveChromosome(chromosome) {
         await chromosomeRepository.save(chromosome);
       }
+    
+    async findById(id){
+        return await chromosomeRepository.findOne({ where: { id } });
+    }
+
+    async findByFitnessHard(fitnessHard){
+        return await chromosomeRepository.findOne({ where: { fitnessHard } });
+    }
 }

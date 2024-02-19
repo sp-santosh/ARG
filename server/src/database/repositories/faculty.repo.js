@@ -6,6 +6,6 @@ export class FacultyRepository{
       }
 
     async findByClassName(className){
-        return facultyRepository.findOne({ where : { className }})
+        return facultyRepository.findOne({ where : { className }});
     }
 }
