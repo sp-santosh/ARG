@@ -1,6 +1,6 @@
 import dataSource from "../../datasource.js";
 const fitness2Repository = dataSource.getRepository("Fitness2");
-export class Fitness1Repository {
+export class Fitness2Repository {
     async findAll() {
         return await fitness2Repository.find();
     }
