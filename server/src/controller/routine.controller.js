@@ -406,6 +406,10 @@ export class RoutineController{
         while (optimumFitness < threshold) {
             let chromosomeRepo = new ChromosomeRepository();
             let fitnessRepo = new FitnessRepository();
+            let slotRepo = new SlotRepository();
+            let facultyRepo = new FacultyRepository();
+            let fitness1Repo = new Fitness1Repository();
+            let fitness2Repo = new Fitness2Repository();
             let fitnessCount = fitnessRepo.findAll.length;
             let chromosome = await chromosomeRepo.findAll({ sort: "fitness", order: "desc" });
             let chromo = [];
@@ -455,126 +459,366 @@ export class RoutineController{
                     await hardConstraintF2();
                 }
             }
-        }
 
-        let randnum = Math.floor(Math.random() * 72);
-        console.log("randnum:" + randnum);
+                let randnum = Math.floor(Math.random() * 72);
+                console.log("randnum:" + randnum);
 
-        let seed1 = Math.floor(Math.random() * 100);
-        let seed2 = Math.floor(Math.random() * 100);
-        for (let i = 0; i < 72; i++) {
-            let randnum1 = Math.floor(Math.random() * 10);
-            let multiplier = 25;
-            let increment = 1;
-            let modulus = 72;
-            let randnumFitness1 = (multiplier * seed1 + increment) % modulus;
-            let randnumFitness2 = (multiplier * seed2 + increment) % modulus;
-            seed1 = randnumFitness1;
-            seed2 = randnumFitness2;
+                let seed1 = Math.floor(Math.random() * 100);
+                let seed2 = Math.floor(Math.random() * 100);
+                
+                for (let i = 0; i < 72; i++) {
+                let randnum1 = Math.floor(Math.random() * 10);
+                let multiplier = 25;
+                let increment = 1;
+                let modulus = 72;
+                let randnumFitness1 = (multiplier * seed1 + increment) % modulus;
+                let randnumFitness2 = (multiplier * seed2 + increment) % modulus;
+                seed1 = randnumFitness1;
+                seed2 = randnumFitness2;
 
-            let fitness1Repo = new Fitness1Repository();
-            let fitnessDna1 = await fitness1Repo.findByToken(randnumFitness1);
-            let dnaT1 = fitnessDna1.dnaT;
-            let dnaS1 = fitnessDna1.dnaS;
-            let dnaF1 = fitnessDna1.dnaF;
+                let fitness1Repo = new Fitness1Repository();
+                let fitnessDna1 = await fitness1Repo.findByToken(randnumFitness1);
+                let dnaT1 = fitnessDna1.dnaT;
+                let dnaS1 = fitnessDna1.dnaS;
+                let dnaF1 = fitnessDna1.dnaF;
 
-            let facultyRepo = new FacultyRepository();
-            let findFaculty = await facultyRepo.findByCode(dnaF1);
-            let facultyName1 = findFaculty.className;
-            let timeReference1;
-            let tStart1;
-            let tEnd1;
-            let indicator1 = fitnessDna1.indicator;
+                let facultyRepo = new FacultyRepository();
+                let findFaculty = await facultyRepo.findByCode(dnaF1);
+                let facultyName1 = findFaculty.className;
+                let timeReference1;
+                let tStart1;
+                let tEnd1;
+                let indicator1 = fitnessDna1.indicator;
 
-            let fitness2Repo = new Fitness2Repository();
-            let fitnessDna2 = await fitness2Repo.findByToken(randnumFitness2);
-            let dnaT2 = fitnessDna2.dnaT;
-            let dnaS2 = fitnessDna2.dnaS;
-            let dnaF2 = fitnessDna2.dnaF;
+                let fitness2Repo = new Fitness2Repository();
+                let fitnessDna2 = await fitness2Repo.findByToken(randnumFitness2);
+                let dnaT2 = fitnessDna2.dnaT;
+                let dnaS2 = fitnessDna2.dnaS;
+                let dnaF2 = fitnessDna2.dnaF;
 
-            let findFaculty2 = await facultyRepo.findByCode(dnaF2);
-            let facultyName2 = findFaculty2.className;
-            let timeReference2;
-            let tStart2;
-            let tEnd2;
-            let indicator2 = fitnessDna2.indicator;
-        }
+                let findFaculty2 = await facultyRepo.findByCode(dnaF2);
+                let facultyName2 = findFaculty2.className;
+                let timeReference2;
+                let tStart2;
+                let tEnd2;
+                let indicator2 = fitnessDna2.indicator;
 
-        if(dnaF1 == dnaF2) {
-            if ((indicator1 == 1) || (indicator2 == 1)) {
-                if (randnum1 < 3) {
-                    let collegeRepo = new CollegeRepository();
-                    let collegeReference1 = await collegeRepo.findByTeacherCode(dnaT1);
-                    let tStart1, tEnd1;
-                    if (randnumFitness1 <= 11) {
-                        tStart1 = collegeReference1.tueStartTime;
-                        tEnd1 = collegeReference1.tueEndTime;
-                    } else if (randnumFitness1 >= 12 && randnumFitness1 <= 23) {
-                        tStart1 = collegeReference1.wedStartTime;
-                        tEnd1 = collegeReference1.wedEndTime;
-                    } else if (randnumFitness1 >= 24 && randnumFitness1 <= 35) {
-                        tStart1 = collegeReference1.thurStartTime;
-                        tEnd1 = collegeReference1.thurEndTime;
-                    } else if (randnumFitness1 >= 36 && randnumFitness1 <= 47) {
-                        tStart1 = collegeReference1.friStartTime;
-                        tEnd1 = collegeReference1.friEndTime;
-                    } else if (randnumFitness1 >= 48 && randnumFitness1 <= 59) {
-                        tStart1 = collegeReference1.monStartTime;
-                        tEnd1 = collegeReference1.monEndTime;
-                    } else {
-                        tStart1 = collegeReference1.sunStartTime;
-                        tEnd1 = collegeReference1.sunEndTime;
+                if(dnaF1 == dnaF2) {
+                    if ((indicator1 == 1) || (indicator2 == 1)) {
+                    if (randnum1 < 3) {
+                        let collegeRepo = new CollegeRepository();
+                        let collegeReference1 = await collegeRepo.findByTeacherCode(dnaT1);
+                        let tStart1, tEnd1;
+                        if (randnumFitness1 <= 11) {
+                            tStart1 = collegeReference1.tueStartTime;
+                            tEnd1 = collegeReference1.tueEndTime;
+                        } else if (randnumFitness1 >= 12 && randnumFitness1 <= 23) {
+                            tStart1 = collegeReference1.wedStartTime;
+                            tEnd1 = collegeReference1.wedEndTime;
+                        } else if (randnumFitness1 >= 24 && randnumFitness1 <= 35) {
+                            tStart1 = collegeReference1.thurStartTime;
+                            tEnd1 = collegeReference1.thurEndTime;
+                        } else if (randnumFitness1 >= 36 && randnumFitness1 <= 47) {
+                            tStart1 = collegeReference1.friStartTime;
+                            tEnd1 = collegeReference1.friEndTime;
+                        } else if (randnumFitness1 >= 48 && randnumFitness1 <= 59) {
+                            tStart1 = collegeReference1.monStartTime;
+                            tEnd1 = collegeReference1.monEndTime;
+                        } else {
+                            tStart1 = collegeReference1.sunStartTime;
+                            tEnd1 = collegeReference1.sunEndTime;
+                        }
+            
+                        let collegeReference2 = await collegeRepo.findByTeacherCode(dnaT2);
+                        let tStart2, tEnd2;
+                        if (randnumFitness2 <= 11) {
+                            tStart2 = collegeReference2.tueStartTime;
+                            tEnd2 = collegeReference2.tueEndTime;
+                        } else if (randnumFitness2 >= 12 && randnumFitness2 <= 23) {
+                            tStart2 = collegeReference2.wedStartTime;
+                            tEnd2 = collegeReference2.wedEndTime;
+                        } else if (randnumFitness2 >= 24 && randnumFitness2 <= 35) {
+                            tStart2 = collegeReference2.thurStartTime;
+                            tEnd2 = collegeReference2.thurEndTime;
+                        } else if (randnumFitness2 >= 36 && randnumFitness2 <= 47) {
+                            tStart2 = collegeReference2.friStartTime;
+                            tEnd2 = collegeReference2.friEndTime;
+                        } else if (randnumFitness2 >= 48 && randnumFitness2 <= 59) {
+                            tStart2 = collegeReference2.monStartTime;
+                            tEnd2 = collegeReference2.monEndTime;
+                        } else if (randnumFitness2 >= 60 && randnumFitness2 <= 71) {
+                            tStart2 = collegeReference2.sunStartTime;
+                            tEnd2 = collegeReference2.sunEndTime;
+                        }
+
+                let slot1 = randnumFitness1 % 4;
+                let slot2 = randnumFitness2 % 4;
+                let slotReference1 = await slotRepo.findById(slot1);
+                let slotReference2 = await slotRepo.findById(slot2);
+                let slotStartTime1 = slotReference1.startTime;
+                let slotEndTime1 = slotReference1.endTime;
+                let slotStartTime2 = slotReference2.startTime;
+                let slotEndTime2 = slotReference2.endTime;
+                if ((tStart1 <= slotStartTime2) && (tEnd1 >= slotEndTime2)) {
+                    if ((tStart2 <= slotStartTime1) && (tEnd2 >= slotEndTime1)) {
+                        let temp1 = dnaT1;
+                        let temp2 = dnaS1;
+                        dnaT1 = dnaT2;
+                        dnaS1 = dnaS2;
+                        dnaT2 = temp1;
+                        dnaS2 = temp2;
                     }
-        
-                    let collegeReference2 = await collegeRepo.findByTeacherCode(dnaT2);
-                    let tStart2, tEnd2;
-                    if (randnumFitness2 <= 11) {
-                        tStart2 = collegeReference2.tueStartTime;
-                        tEnd2 = collegeReference2.tueEndTime;
-                    } else if (randnumFitness2 >= 12 && randnumFitness2 <= 23) {
-                        tStart2 = collegeReference2.wedStartTime;
-                        tEnd2 = collegeReference2.wedEndTime;
-                    } else if (randnumFitness2 >= 24 && randnumFitness2 <= 35) {
-                        tStart2 = collegeReference2.thurStartTime;
-                        tEnd2 = collegeReference2.thurEndTime;
-                    } else if (randnumFitness2 >= 36 && randnumFitness2 <= 47) {
-                        tStart2 = collegeReference2.friStartTime;
-                        tEnd2 = collegeReference2.friEndTime;
-                    } else if (randnumFitness2 >= 48 && randnumFitness2 <= 59) {
-                        tStart2 = collegeReference2.monStartTime;
-                        tEnd2 = collegeReference2.monEndTime;
-                    } else {
-                        tStart2 = collegeReference2.sunStartTime;
-                        tEnd2 = collegeReference2.sunEndTime;
                     }
                 }
+                } else {
+                    if (randnum1 < 2) {
+                        //cross over with probability 2/10 if indicator indicates it is fit
+                        let collegeReference1 = await collegeRepo.findByTeacherCode(dnaT1);
+                        if (randnumFitness1 <= 11) {
+                            tStart1 = collegeReference1.tueStartTime;
+                            tEnd1 = collegeReference1.tueEndTime;
+                        }
+                        if (randnumFitness1 >= 12 && randnumFitness1 <= 23) {
+                            tStart1 = collegeReference1.wedStartTime;
+                            tEnd1 = collegeReference1.wedEndTime;
+                        }
+                        if (randnumFitness1 >= 24 && randnumFitness1 <= 35) {
+                            tStart1 = collegeReference1.thurStartTime;
+                            tEnd1 = collegeReference1.thurEndTime;
+                        }
+                        if (randnumFitness1 >= 36 && randnumFitness1 <= 47) {
+                            tStart1 = collegeReference1.friStartTime;
+                            tEnd1 = collegeReference1.friEndTime;
+                        }
+                        if (randnumFitness1 >= 48 && randnumFitness1 <= 59) {
+                            tStart1 = collegeReference1.satStartTime;
+                            tEnd1 = collegeReference1.satEndTime;
+                        }
+                        if (randnumFitness1 >= 60 && randnumFitness1 <= 71) {
+                            tStart1 = collegeReference1.sunStartTime;
+                            tEnd1 = collegeReference1.sunEndTime;
+                        }
+
+                        let collegeReference2 = await collegeRepo.findByTeacherCode(dnaT2);
+                        if (randnumFitness2 <= 11) {
+                            tStart2 = collegeReference2.tueStartTime;
+                            tEnd2 = collegeReference2.tueEndTime;
+                        }
+                        if (randnumFitness2 >= 12 && randnumFitness2 <= 23) {
+                            tStart2 = collegeReference2.wedStartTime;
+                            tEnd2 = collegeReference2.wedEndTime;
+                        }
+                        if (randnumFitness2 >= 24 && randnumFitness2 <= 35) {
+                            tStart2 = collegeReference2.thurStartTime;
+                            tEnd2 = collegeReference2.thurEndTime;
+                        }
+                        if (randnumFitness2 >= 36 && randnumFitness2 <= 47) {
+                            tStart2 = collegeReference2.friStartTime;
+                            tEnd2 = collegeReference2.friEndTime;
+                        }
+                        if (randnumFitness2 >= 48 && randnumFitness2 <= 59) {
+                            tStart2 = collegeReference2.satStartTime;
+                            tEnd2 = collegeReference2.satEndTime;
+                        }
+                        if (randnumFitness2 >= 60 && randnumFitness2 <= 71) {
+                            tStart2 = collegeReference2.sunStartTime;
+                            tEnd2 = collegeReference2.sunEndTime;
+                        }
+                        let slot1 = randnumFitness1 % 4;
+                        let slot2 = randnumFitness2 % 4;
+                        let slotReference1 = await slotRepo.findById(slot1);
+                        let slotReference2 = await slotRepo.findById(slot2);
+                        let slotStartTime1 = slotReference1.startTime;
+                        let slotEndTime1 = slotReference1.endTime;
+                        let slotStartTime2 = slotReference2.startTime;
+                        let slotEndTime2 = slotReference2.endTime;
+                        if ((tStart1 <= slotStartTime2) && (tEnd1 >= slotEndTime2)) {
+                            if ((tStart2 <= slotStartTime1) && (tEnd2 >= slotEndTime1)) {
+                                let temp1 = dnaT1;
+                                let temp2 = dnaS1;
+                                dnaT1 = dnaT2;
+                                dnaS1 = dnaS2;
+                                dnaT2 = temp1;
+                                dnaS2 = temp2;
+                            }
+                                }
+                            }
+                        }
+                    }
+
+
+                    fitnessDna1.dnaT = dnaT1;
+                    fitnessDna1.dnaS = dnaS1;
+                    fitnessDna2.dnaT = dnaT2;
+                    fitnessDna2.dnaS = dnaS2;
+
+                    fitnessDna1.save(fitnessDna1);
+                    fitnessDna2.save(fitnessDna2);
+                }
+                    await this.mutation();
+
+                    let hfitnessValue1 = hardConstraintF1();
+                    let sfitnessValue1 = softConstraintFS1();
+                    console.log("hfitnessValue1" + hfitnessValue1);
+                    console.log("sfitnessValue1" + sfitnessValue1);
+                    let hfitnessValue2 = hardConstraintF2();
+                    let sfitnessValue2 = softConstraintFS2();
+                    console.log("hfitnessValue2" + hfitnessValue2);
+                    console.log("sfitnessValue2" + sfitnessValue2);
+                    let totalFitness1 = hfitnessValue1 + sfitnessValue1;
+                    let totalFitness2 = hfitnessValue2 + sfitnessValue2;
+                    console.log("total fitness1:" + totalFitness1);
+                    console.log("total fitness2:" + totalFitness2);
+
+                    createChildChromosome(totalFitness1, totalFitness2, hfitnessValue1, sfitnessValue1, hfitnessValue2, sfitnessValue2);
+                    let optimumFitness;
+                    if(hfitnessValue1 > hfitnessValue2) {
+                        optimumFitness = hfitnessValue1;
+                    } else {
+                        optimumFitness = hfitnessValue2;
+                    }
+
+                    console.log("This inside where loop");
+                    console.log("optimum:" + optimumFitness);
             }
-        }
 
-        let slot1 = randnumFitness1 % 4;
-        let slot2 = randnumFitness2 % 4;
-        let slotReference1 = await Slot.findById(slot1);
-        let slotReference2 = await Slot.findById(slot2);
-        let slotStartTime1 = slotReference1.startTime;
-        let slotEndTime1 = slotReference1.endTime;
-        let slotStartTime2 = slotReference2.startTime;
-        let slotEndTime2 = slotReference2.endTime;
-        if ((tStart1 <= slotStartTime2) && (tEnd1 >= slotEndTime2)) {
-            if ((tStart2 <= slotStartTime1) && (tEnd2 >= slotEndTime1)) {
-                let temp1 = dnaT1;
-                let temp2 = dnaS1;
-                dnaT1 = dnaT2;
-                dnaS1 = dnaS2;
-                dnaT2 = temp1;
-                dnaS2 = temp2;
-            }
-        }
+                console.log("optimum:" + optimumFitness);
+                console.log("outside where loop");
+                if(optimumFitness >= threshold) {
+                    // Assuming you have a function `redirect` defined elsewhere in your code
+                    await this.storeCode(optimumFitness);
+                }
 
+    }
 
+    async mutation(){
+        console.log("inside mutation");
+        let fitness11;
+        let fitness22;
 
-        
+        let startTime;
+        let endTime;
+        let facultyNameSlot;
+        let facultyName;
+        let facultyName1;
+        let token = 1;
+        let fitness1Repo = new Fitness1Repository();
+        let facultyRepo = new FacultyRepository();
+        let fitness2repo  = new Fitness2Repository();
+        let collegeRepo = new CollegeRepository();
+        let slotRepo = new SlotRepository();
+        let count = (await fitness1Repo.findAll()).length;
+        for(let mutatechromosome=0; mutatechromosome<2; mutatechromosome++) {     //for mutation of 2 chromosome from fitness1 and fitness2 table
+            console.log("inside mutateChromosome");
 
+            for (let i = 0; i < count; i++) {
+                let faculty11;
+                let tCode;
+                let sCode;
 
+                let random = Math.random();
+                let randnum2 = Math.floor(random * 10);   //mutation probability
+                //operation for chromosome in fitness1 table
+                fitness11 = await fitness1Repo.findByToken(i);
+                faculty11 = fitness11.dnaF;  //faculty code of gene
+                facultyNameSlot = await facultyRepo.findByCode(faculty11);       //retrieve faculty of gene
+                facultyName = facultyNameSlot.className;
+                
+                tCode = fitness11.dnaT;          //teacher code of gene
+                sCode = fitness11.dnaS;          //subject code of gene
+
+                fitness22 = await fitness2repo.findByToken(i);     //if condition vitra read nagareko le bahira define gareko
+                if (mutatechromosome == 1) {     //mutation operation for chromosome in fitness2
+                    console.log("inside count 1");
+                    let faculty111 = fitness22.dnaF;
+                    let facultyNameSlot1 = await facultyRepo.findByCode(faculty111);
+                    facultyName = facultyNameSlot1.className;
+                    
+                    tCode = fitness22.dnaT;
+                    sCode = fitness22.dnaS;
+
+                }
+                if (randnum2 < 1) {        //mutation operation if it is within the mutation probability i.e. 20%
+                    console.log("inside randnum2");
+                    let college = College.findAll();
+                    let size = college.length;
+                    let randnum3 = Math.floor(Math.random() * size);
+                
+                    let college1 = await collegeRepo.findById(randnum3 + 1);
+                
+                    let facultyCollege = college1.faculty;   //mutated data ko faculty
+                
+                    let teacherCode = college1.teacherCode;  //mutated data ko teacher code
+                    let subjectCode = college1.subjectCode;  //mutated data ko subject code
+                
+                    while (token == 1) {
+                        console.log("inside token");
+                
+                        if (facultyCollege != facultyName) { //apply mutation only if faculty matches
+                            console.log("inside if");
+                            console.log("faculty in db=" + facultyCollege);
+                            console.log("faculty=" + facultyName);
+                            randnum3 = Math.floor(Math.random() * size);
+                            college1 = awaitcollegeRepo.findById(randnum3 + 1);
+                
+                            facultyCollege = college1.faculty;
+                            teacherCode = college1.teacherCode;
+                            subjectCode = college1.subjectCode;
+                        } else {
+                            console.log("before comparison");
+                            if (i >= 0 && i <= 11) {
+                                //0-11 denotes 12 components of chromosome which represents routine of tuesday for 3 sections
+                                startTime = college1.tueStartTime;
+                                endTime = college1.tueEndTime;
+                            } else if (i >= 12 && i <= 23) {
+                                startTime = college1.wedStartTime;
+                                endTime = college1.wedEndTime;
+                            } else if (i >= 24 && i <= 35) {
+                                startTime = college1.thurStartTime;
+                                endTime = college1.thurEndTime;
+                            } else if (i >= 36 && i <= 47) {
+                                startTime = college1.friStartTime;
+                                endTime = college1.friEndTime;
+                            } else if (i >= 48 && i <= 59) {
+                                startTime = college1.satStartTime;
+                                endTime = college1.satEndTime;
+                            } else {
+                                startTime = college1.sunStartTime;
+                                endTime = college1.sunEndTime;
+                            }
+                            let slot = i % 4;
+                            let slotReference = await slotRepo.findById(slot);
+                            let slotStartTime = slotReference.startTime;
+                            let slotEndTime = slotReference.endTime;
+                            if ((slotStartTime >= startTime) && (slotEndTime <= endTime)) {
+                                console.log("time match");
+                                console.log("faculty in db=" + facultyCollege);
+                                console.log("faculty=" + facultyName);
+                                tCode = teacherCode;
+                                sCode = subjectCode;
+                                break;
+                            } else {
+                                randnum3 = Math.floor(Math.random() * size);
+                                college1 = collegeRepo.findById(randnum3 + 1);
+                                facultyCollege = college1.faculty;
+                                teacherCode = college1.teacherCode;
+                                subjectCode = college1.subjectCode;
+                            }
+                        }
+                    }
+
+                            if (mutatechromosome == 0) {
+                                fitness11.dnaT = tCode;
+                                fitness11.dnaS = sCode;
+                                fitness11.save(fitness11);
+                            } else {
+                                fitness22.dnaT = tCode;
+                                fitness22.dnaS = sCode;
+                                fitness22.save(fitness22);
+                            }
+                        }
+                    }
+                }
     }
 
     async hardConstraintF1() {
@@ -1099,8 +1343,7 @@ export class RoutineController{
         await fitness2Repo.deleteAll();
     }
     
-    async storeCode() {
-        let optimumFitness = params.optimumFitness;
+    async storeCode(optimumFitness) {
         console.log("optimumFitmess:", optimumFitness);
         let chromoRepo = new ChromosomeRepository();
         let chromosome = await chromoRepo.findByFitnessHard(optimumFitness);
