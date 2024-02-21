@@ -20,7 +20,7 @@ export class RoutineController{
             let chromosomeList = [];
             let locationCount = 0;
             for (let dayCount = 0; dayCount < 6; dayCount++) {
-                for (let sectionCount = 1; sectionCount < 4; sectionCount++) {
+                for (let sectionCount = 1; sectionCount < 3; sectionCount++) {
                     for (let slotCount = 1; slotCount < 5; slotCount++) {
                         // Retrieving faculty information
                         const facultyId = sectionCount; // Assuming sectionCount is facultyId
@@ -57,7 +57,7 @@ export class RoutineController{
                                 console.log("leisureCount:" + leisureCount);
                                 // slotCount = slotCount - 1;
                                 console.log("inside if condition");
-                            } else if ((scode !== "1111" && scode !== "10001" && scode !== "10000") || leisureCount > 10) {
+                            } else if (scode !== "1111" && scode !== "10001" && scode !== "10000") {
                                 console.log("inside else condition" + facultyName_slot + "-----" + facultyName_db);
 
                                 if (facultyName_slot.className === facultyName_db) {
@@ -122,7 +122,7 @@ export class RoutineController{
         
         res.status(200).json({ message: 'Chromosome created successfully' });
         // Redirecting to crossover action
-        // crossOver();
+        await this.crossOver();
     }
 
     async splitDna(id) {
@@ -178,7 +178,7 @@ export class RoutineController{
         chromo.fitnessHard = fitnessValueH;
         chromo.fitnessSoft = fitnessValueS;
     
-        await chromo.save(chromo);
+        await chromosomeRepoInstance.saveChromosome(chromo);
     
         // await new FitnessRepository.deleteMany({});
     }
@@ -203,7 +203,7 @@ export class RoutineController{
                 ul = ll + 8;
                 for(j = ll; j <= ul; j = j + 4){
                     for(k = j + 4; k <= ul; k = k + 4){     //+4 because same slot repeats after duration of 4
-                        if(dna[j] == dna[k] && dna[j] != "11111"){        //slot comparison for same day same period (teacher code)
+                        if(dna[j] == dna[k]){        //slot comparison for same day same period (teacher code)
                             fitnessValue = fitnessValue - 5;
                         }
                         else{
@@ -238,12 +238,7 @@ export class RoutineController{
             for(let j = ll; j < ul; j++){
                 for(let k = j + 1; k <= ul; k++){
                     if(dna[j] == dna[k]){
-                        if(dna[j] == "1111") {
                             fitnessValue = fitnessValue + 10;
-                        }
-                        else {
-                            fitnessValue = fitnessValue - 5;
-                        }
                     }
                     else{
                         fitnessValue = fitnessValue + 10;
@@ -364,31 +359,23 @@ export class RoutineController{
     }
     
     async softConstraintS2(fitnessValue) {
-        let insignificantLocation1 = 0;    //leisure period on 1st and last (4th) is not significant
+        let insignificantLocation1 = 0;
         let insignificantLocation2 = 3;
         let leisure1 = "1111";
         let i, j;
         let k = 0;
         let fitnessRepo = new FitnessRepository();
-        
+    
         let fitnessCount = await fitnessRepo.findAll().length;
         for(i = 0; i < 18; i++){
             for(j = k; j < k + 4; j++){
                 let fitness = await fitnessRepo.findByToken(j);
-                let subjectCode = fitness.dnaS;
-                if (subjectCode === leisure1){
                     if(j != insignificantLocation1 && j != insignificantLocation2) {
                         let fitness1 = await fitnessRepo.findByToken(j - 1);
-                        let subjectCode1 = fitness1.dnaS; //Subject code one step behind location j
                         let fitness2 = await fitnessRepo.findByToken(j + 1);
-                        let subjectCode2 = fitness2.dnaS; //Subject code one step ahead location j
-                        if(subjectCode1 != leisure1 && subjectCode2 != leisure1){
-                            fitnessValue = fitnessValue - 5;
-                        }
-                        else{
+                        
                             fitnessValue = fitnessValue + 10;
-                        }
-                    }
+                        
                 }
             }
             k = k + 4;
@@ -399,25 +386,30 @@ export class RoutineController{
         return fitnessValue;
     }
 
+    async calculateThreshold() {
+        let collegeRepo = new CollegeRepository();
+        let collegeThreshold = await collegeRepo.findAll();
+        const thresholdFinal = 720 + 720 + collegeThreshold.length * 10 - 100;
+        const threshold = thresholdFinal;
+        console.log('Threshold: ' + threshold);
+        return threshold;
+    }
+    
 
-    async crossover(){
+
+    async crossOver(){
         let optimumFitness = 0;
-
+        let threshold = await this.calculateThreshold();
         while (optimumFitness < threshold) {
             let chromosomeRepo = new ChromosomeRepository();
             let fitnessRepo = new FitnessRepository();
             let slotRepo = new SlotRepository();
-            let facultyRepo = new FacultyRepository();
-            let fitness1Repo = new Fitness1Repository();
-            let fitness2Repo = new Fitness2Repository();
             let fitnessCount = fitnessRepo.findAll.length;
             let chromosome = await chromosomeRepo.findAll({ sort: "fitness", order: "desc" });
-            let chromo = [];
-            let fitness = [];
-            chromo = chromosome.chromo;
-            fitness = chromosome.fitness;
+            console.log('chromosome: ', chromosome);
+            let chromo = chromosome.map(c => c.chromo);
+            console.log('chromo: ', chromo);
             for (let i = 0; i < 2; i++) {
-                console.log("fitnessHIghhh:" + fitness[i]);
                 console.log("Chromosome" + [i] + ":" + chromo[i]);
                 console.log("size:" + chromo.length);
                 let chromos = chromo[i].substring(1, chromo[i].length - 1).replace(/\s/g, "");
@@ -425,38 +417,39 @@ export class RoutineController{
                 let gene;
                 let dna;
                 gene = chromos.split(",");
+                console.log("gene" + gene);
 
-                for (let j = 0; j < fitnessCount; j++) {
+                for (let j = 0; j < gene.length; j++) {
                     console.log("gene" + [j] + ":" + gene[j].replace(/\s/g, ""));
+                    console.log('printttt------------');
                     dna = gene[j].split("."); //split wrt "."
-                    for (let k = 0; k < 4; k++) {
-                        console.log("dna:" + dna[k].replace(/\s/g, ""));
-                    }
+                    
                     if (i == 0) {
+                        console.log('int i == 0');
                         let fitness1 = new Fitness1Repository();
                         fitness1.token = j;
-                        fitness1.dnaF = dna[0];
+                        fitness1.dnaF = dna[0].replace(/"/g, '');
                         fitness1.dnaT = dna[1];
                         fitness1.dnaS = dna[2];
-                        fitness1.dnaSl = dna[3];
+                        fitness1.dnaSl = dna[3].replace(/"/g, '');;
 
                         await fitness1.save(fitness1);
                     } else {
                         let fitness2 = new Fitness1Repository();
                         fitness2.token = j;
-                        fitness2.dnaF = dna[0];
+                        fitness2.dnaF = dna[0].replace(/"/g, '');;
                         fitness2.dnaT = dna[1];
                         fitness2.dnaS = dna[2];
-                        fitness2.dnaSl = dna[3];
+                        fitness2.dnaSl = dna[3].replace(/"/g, '');;
 
                         await fitness2.save(fitness2);
                     }
                 }
                 if(i == 0) {
-                    await hardConstraintF1();
+                    await this.hardConstraintF1();
                 }
                 else {
-                    await hardConstraintF2();
+                    await this.hardConstraintF2();
                 }
             }
 
@@ -467,6 +460,7 @@ export class RoutineController{
                 let seed2 = Math.floor(Math.random() * 100);
                 
                 for (let i = 0; i < 72; i++) {
+
                 let randnum1 = Math.floor(Math.random() * 10);
                 let multiplier = 25;
                 let increment = 1;
@@ -478,6 +472,9 @@ export class RoutineController{
 
                 let fitness1Repo = new Fitness1Repository();
                 let fitnessDna1 = await fitness1Repo.findByToken(randnumFitness1);
+                let fitness2Repo = new Fitness2Repository();
+                let fitnessDna2 = await fitness2Repo.findByToken(randnumFitness2);
+                if(fitnessDna1 && fitnessDna2){
                 let dnaT1 = fitnessDna1.dnaT;
                 let dnaS1 = fitnessDna1.dnaS;
                 let dnaF1 = fitnessDna1.dnaF;
@@ -490,8 +487,7 @@ export class RoutineController{
                 let tEnd1;
                 let indicator1 = fitnessDna1.indicator;
 
-                let fitness2Repo = new Fitness2Repository();
-                let fitnessDna2 = await fitness2Repo.findByToken(randnumFitness2);
+                
                 let dnaT2 = fitnessDna2.dnaT;
                 let dnaS2 = fitnessDna2.dnaS;
                 let dnaF2 = fitnessDna2.dnaF;
@@ -591,8 +587,8 @@ export class RoutineController{
                             tEnd1 = collegeReference1.friEndTime;
                         }
                         if (randnumFitness1 >= 48 && randnumFitness1 <= 59) {
-                            tStart1 = collegeReference1.satStartTime;
-                            tEnd1 = collegeReference1.satEndTime;
+                            tStart1 = collegeReference1.monStartTime;
+                            tEnd1 = collegeReference1.monEndTime;
                         }
                         if (randnumFitness1 >= 60 && randnumFitness1 <= 71) {
                             tStart1 = collegeReference1.sunStartTime;
@@ -617,8 +613,8 @@ export class RoutineController{
                             tEnd2 = collegeReference2.friEndTime;
                         }
                         if (randnumFitness2 >= 48 && randnumFitness2 <= 59) {
-                            tStart2 = collegeReference2.satStartTime;
-                            tEnd2 = collegeReference2.satEndTime;
+                            tStart2 = collegeReference2.monStartTime;
+                            tEnd2 = collegeReference2.monEndTime;
                         }
                         if (randnumFitness2 >= 60 && randnumFitness2 <= 71) {
                             tStart2 = collegeReference2.sunStartTime;
@@ -652,17 +648,18 @@ export class RoutineController{
                     fitnessDna2.dnaT = dnaT2;
                     fitnessDna2.dnaS = dnaS2;
 
-                    fitnessDna1.save(fitnessDna1);
-                    fitnessDna2.save(fitnessDna2);
+                    fitness1Repo.save(fitnessDna1);
+                    fitness2Repo.save(fitnessDna2);
+                }
                 }
                     await this.mutation();
 
-                    let hfitnessValue1 = hardConstraintF1();
-                    let sfitnessValue1 = softConstraintFS1();
+                    let hfitnessValue1 = await this.hardConstraintF1();
+                    let sfitnessValue1 = await this.softConstraintFS1();
                     console.log("hfitnessValue1" + hfitnessValue1);
                     console.log("sfitnessValue1" + sfitnessValue1);
-                    let hfitnessValue2 = hardConstraintF2();
-                    let sfitnessValue2 = softConstraintFS2();
+                    let hfitnessValue2 = await this.hardConstraintF2();
+                    let sfitnessValue2 = await this.softConstraintFS2();
                     console.log("hfitnessValue2" + hfitnessValue2);
                     console.log("sfitnessValue2" + sfitnessValue2);
                     let totalFitness1 = hfitnessValue1 + sfitnessValue1;
@@ -670,7 +667,7 @@ export class RoutineController{
                     console.log("total fitness1:" + totalFitness1);
                     console.log("total fitness2:" + totalFitness2);
 
-                    createChildChromosome(totalFitness1, totalFitness2, hfitnessValue1, sfitnessValue1, hfitnessValue2, sfitnessValue2);
+                    await this.createChildChromosome(totalFitness1, totalFitness2, hfitnessValue1, sfitnessValue1, hfitnessValue2, sfitnessValue2);
                     let optimumFitness;
                     if(hfitnessValue1 > hfitnessValue2) {
                         optimumFitness = hfitnessValue1;
@@ -680,7 +677,7 @@ export class RoutineController{
 
                     console.log("This inside where loop");
                     console.log("optimum:" + optimumFitness);
-            }
+        }
 
                 console.log("optimum:" + optimumFitness);
                 console.log("outside where loop");
@@ -720,14 +717,17 @@ export class RoutineController{
                 let randnum2 = Math.floor(random * 10);   //mutation probability
                 //operation for chromosome in fitness1 table
                 fitness11 = await fitness1Repo.findByToken(i);
+                fitness22 = await fitness2repo.findByToken(i);  
+
+                if(fitness11 && fitness22){
+
                 faculty11 = fitness11.dnaF;  //faculty code of gene
                 facultyNameSlot = await facultyRepo.findByCode(faculty11);       //retrieve faculty of gene
                 facultyName = facultyNameSlot.className;
                 
                 tCode = fitness11.dnaT;          //teacher code of gene
                 sCode = fitness11.dnaS;          //subject code of gene
-
-                fitness22 = await fitness2repo.findByToken(i);     //if condition vitra read nagareko le bahira define gareko
+   //if condition vitra read nagareko le bahira define gareko
                 if (mutatechromosome == 1) {     //mutation operation for chromosome in fitness2
                     console.log("inside count 1");
                     let faculty111 = fitness22.dnaF;
@@ -759,7 +759,7 @@ export class RoutineController{
                             console.log("faculty in db=" + facultyCollege);
                             console.log("faculty=" + facultyName);
                             randnum3 = Math.floor(Math.random() * size);
-                            college1 = awaitcollegeRepo.findById(randnum3 + 1);
+                            college1 = await collegeRepo.findById(randnum3 + 1);
                 
                             facultyCollege = college1.faculty;
                             teacherCode = college1.teacherCode;
@@ -780,8 +780,8 @@ export class RoutineController{
                                 startTime = college1.friStartTime;
                                 endTime = college1.friEndTime;
                             } else if (i >= 48 && i <= 59) {
-                                startTime = college1.satStartTime;
-                                endTime = college1.satEndTime;
+                                startTime = college1.monStartTime;
+                                endTime = college1.monEndTime;
                             } else {
                                 startTime = college1.sunStartTime;
                                 endTime = college1.sunEndTime;
@@ -810,13 +810,14 @@ export class RoutineController{
                             if (mutatechromosome == 0) {
                                 fitness11.dnaT = tCode;
                                 fitness11.dnaS = sCode;
-                                fitness11.save(fitness11);
+                                fitness1Repo.save(fitness11);
                             } else {
                                 fitness22.dnaT = tCode;
                                 fitness22.dnaS = sCode;
-                                fitness22.save(fitness22);
+                                fitness2Repo.save(fitness22);
                             }
                         }
+                    }
                     }
                 }
     }
@@ -843,8 +844,8 @@ export class RoutineController{
                     for(k = j + 4; k <= ul; k = k + 4){
                         let fitness1 = await fitness1Repo.findByToken(j);
                         let fitness2 = await fitness1Repo.findByToken(k); //+4 because same slot repeats after duration of 4
-    
-                        if(dna[j] == dna[k] && dna[j] != "11111"){
+                        if(fitness1 && fitness2) {
+                        if(dna[j] == dna[k]){
                             //slot comparison for same day same period (teacher code)
                             fitnessValue = fitnessValue - 5;
                             fitness1.indicator = 1;
@@ -855,8 +856,9 @@ export class RoutineController{
                             fitness2.indicator = 0;
                             fitness1.indicator = 0;
                         }
-                        await fitness1.save(fitness1);
-                        await fitness2.save(fitness2);
+                        await fitness1Repo.save(fitness1);
+                        await fitness1Repo.save(fitness2);
+                    }
                     }
                 }
                 ll++;
@@ -876,6 +878,7 @@ export class RoutineController{
         let slotRepo = new SlotRepository();
         for(let i = 0; i < fitness1Count; i++) {
             let code = await fitness1Repo.findByToken(i);
+            if(code){
             let tcode = code.dnaT;
             let presentindicator = code.indicator;
             if (presentindicator == 0){
@@ -925,6 +928,7 @@ export class RoutineController{
                 await fitness1Repo.save(fitness1);
             }
         }
+        }
         fitnessValueF111 = await this.hardConstraintF111(fitnessValue);
         return fitnessValueF111;
     }
@@ -934,17 +938,18 @@ export class RoutineController{
         let collegeWorkLoad = await collegeRepo.findAll();
         let facultyRepo = new FacultyRepository();
         let fitness1Repo = new Fitness1Repository();
+        let fitnessCount = await fitness1Repo.findAll().length;
         let size = collegeWorkLoad.length;
         for(let count = 0; count < size; count++){
             let comparisonCount = 0;      //This stores the number of occurence of the subject
-            let collegeWorkLoad1 = await collegeRepo.findById(count + 1);
+            let collegeWorkLoad1 = await collegeRepo.findCollegeById(count + 1);
             let teacherCode = collegeWorkLoad1.teacherCode;
             let subjectCode = collegeWorkLoad1.subjectCode;
             let facultyCode1 = collegeWorkLoad1.faculty;
             let facultyCodeClass = await facultyRepo.findByClassName(facultyCode1);
             let facultyCode = facultyCodeClass.code;
             let workAllocated = collegeWorkLoad1.classesPerWeek;
-            for(let loop = 0; loop < 72; loop++){
+            for(let loop = 0; loop < fitnessCount; loop++){
                 let comparisonCollege = await fitness1Repo.findByToken(loop);       //retrieve gene from fitness1 table
                 let presentIndicator = comparisonCollege.indicator;
                 let rteacherCode = comparisonCollege.dnaT;
@@ -993,7 +998,9 @@ export class RoutineController{
         let fitness1Count = await fitness1Repo.findAll().length;
         for(let i = 0; i < fitness1Count; i++) {
             let fitness = await fitness1Repo.findByToken(i);
+            if(fitness){
             dna[i] = fitness.dnaS;
+            }
         }
         let i = 0;
         let ll = i;
@@ -1002,12 +1009,8 @@ export class RoutineController{
             for(let j = ll; j < ul; j++){
                 for(let k = j + 1; k <= ul; k++){
                     if(dna[j] == dna[k]){
-                        if(dna[j] == "1111") {
                             fitnessValue1 = fitnessValue1 + 10;
-                        }
-                        else {
-                            fitnessValue1 = fitnessValue1 - 5;
-                        }
+                        
                     }
                     else{
                         fitnessValue1 = fitnessValue1 + 10;
@@ -1032,6 +1035,7 @@ export class RoutineController{
         for(i = 0; i < 18; i++){
             for(j = k; j < k + 4; j++){
                 let fitness = await fitness1Repo.findByToken(j);
+                if(fitness){
                 let subjectCode = fitness.dnaS;
                 if (subjectCode === leisure1){
                     if(j != insignificantLocation1 && j != insignificantLocation2) {
@@ -1048,6 +1052,7 @@ export class RoutineController{
                     }
                 }
             }
+            }
             k = k + 4;
             insignificantLocation1 = insignificantLocation1 + 4;
             insignificantLocation2 = insignificantLocation2 + 4;
@@ -1060,11 +1065,13 @@ export class RoutineController{
         let fitnessValue = 0;
         let fitnessValueF22 = 0;
         let dna = [];
-        let fitness2 = new Fitness2Repository();
-        let fitness2Count = await fitness2.findAll().length;
+        let fitness2Repo = new Fitness2Repository();
+        let fitness2Count = await fitness2Repo.findAll().length;
         for(let i = 0; i < fitness2Count; i++) {
             let fitness = await fitness2.findByToken(i);
+            if(fitness){
             dna[i] = fitness.dnaT;
+            }
         }
         let i, j, k, l;
         let ul;
@@ -1075,9 +1082,11 @@ export class RoutineController{
                 ul = ll + 8;
                 for(j = ll; j <= ul; j = j + 4){
                     for(k = j + 4; k <= ul; k = k + 4){
-                        let fitness1 = await fitness2Count.findByToken(j);
-                        let fitness2 = await fitness2Count.findByToken(k); //+4 because same slot repeats after duration of 4
-                        if(dna[j] == dna[k] && dna[j] != "11111"){        //slot comparison for same day same period (teacher code)
+                        
+                        let fitness1 = await fitness2Repo.findByToken(j);
+                        let fitness2 = await fitness2Repo.findByToken(k);
+                        if(fitness1 && fitness2){ //+4 because same slot repeats after duration of 4
+                        if(dna[j] == dna[k]){        //slot comparison for same day same period (teacher code)
                             fitnessValue = fitnessValue - 5;
                             fitness1.indicator = 1;
                             fitness2.indicator = 1;
@@ -1087,8 +1096,9 @@ export class RoutineController{
                             fitness1.indicator = 0;
                             fitness2.indicator = 0;
                         }
-                        await fitness1.save(fitness1);
-                        await fitness2.save(fitness2);
+                        await fitness2Repo.save(fitness1);
+                        await fitness2Repo.save(fitness2);
+                    }
                     }
                 }
                 ll++;
@@ -1106,8 +1116,9 @@ export class RoutineController{
         let slotRepo = new SlotRepository();
         let collegeRepo = new CollegeRepository();
         let fitness2Count = await fitness2Repo.findAll().length;
-        for(let i = 0; i < 72; i++) {
+        for(let i = 0; i < fitness2Count; i++) {
             let code = await fitness2Repo.findByToken(i);
+            if(code){
             let tcode = code.dnaT;
             let presentIndicator = code.indicator;
             let fitness1 = await fitness2Repo.findByToken(i);
@@ -1159,7 +1170,8 @@ export class RoutineController{
                     fitness1.indicator = 0;
                 }
             }
-            await fitness1.save(fitness1);
+            await fitness2Repo.save(fitness1);
+        }
         }
         fitnessValueF222 = await this.hardConstraintF222(fitnessValue);
         return fitnessValueF222;
@@ -1173,7 +1185,7 @@ export class RoutineController{
         let size = collegeWorkLoad.length;
         for(let count = 0; count < size; count++){
             let comparisonCount = 0;      //This stores the number of occurence of the subject
-            let collegeWorkLoad1 = await collegeRepo.findById(count + 1);
+            let collegeWorkLoad1 = await collegeRepo.findCollegeById(count + 1);
             let teacherCode = collegeWorkLoad1.teacherCode;
             let subjectCode = collegeWorkLoad1.subjectCode;
             let facultyCode1 = collegeWorkLoad1.faculty;
@@ -1181,7 +1193,8 @@ export class RoutineController{
             let facultyCode = facultyCodeClass.code;
             let workAllocated = collegeWorkLoad1.classesPerWeek;
             for(let loop = 0; loop < 72; loop++){
-                let comparisonCollege = await fitness2Repo.findByToken(loop);       //retrieve gene from fitness1 table
+                let comparisonCollege = await fitness2Repo.findByToken(loop); 
+                if(comparisonCollege){
                 let rteacherCode = comparisonCollege.dnaT;
                 let rsubjectCode = comparisonCollege.dnaS;
                 let rfacultyCode = comparisonCollege.dnaF;
@@ -1203,6 +1216,7 @@ export class RoutineController{
                 }
                 comparisonCollege.indicator = indicatorWorkLoad;
                 await comparisonCollege.save(comparisonCollege);
+            }
             }
             if(workAllocated == comparisonCount - 1 || workAllocated == comparisonCount || workAllocated == comparisonCount + 1){
                 fitnessValue = fitnessValue + 10;
@@ -1230,7 +1244,9 @@ export class RoutineController{
     
         for(let i = 0; i < count; i++) {
             let fitness = await fitness2repo.findByToken(i);
+            if(fitness){
             dna[i] = fitness.dnaS;
+            }
         }
         let i = 0;
         let ll = i;
@@ -1267,6 +1283,7 @@ export class RoutineController{
         for(let i = 0; i < 18; i++){
             for(let j = k; j < k + 4; j++){
                 let fitness = await fitness2Repo.findByToken(j);
+                if(fitness){
                 let subjectCode = fitness.dnaS;
                 if (subjectCode === leisure1){
                     if(j !== insignificantLocation1 && j !== insignificantLocation2) {
@@ -1283,6 +1300,7 @@ export class RoutineController{
                     }
                 }
             }
+            }
             k = k + 4;
             insignificantLocation1 = insignificantLocation1 + 4;
             insignificantLocation2 = insignificantLocation2 + 4;
@@ -1298,31 +1316,39 @@ export class RoutineController{
         let myList1 = [];
 
         let fitness1Repo = new Fitness1Repository();
-        for(let i = 0; i < 72; i++) {
+        let fitnessCount = await fitness1Repo.findAll().length;
+        for(let i = 0; i < fitnessCount; i++) {
+            console.log("Token: " + i);
             let fitness1 = await fitness1Repo.findByToken(i);
-            let dnaF = fitness1.dnaF;
-            let dnaT = fitness1.dnaT;
-            let dnaS = fitness1.dnaS;
-            let dnaSl = fitness1.dnaSl;
-    
-            wholeCode = dnaF + "." + dnaT + "." + dnaS + "." + dnaSl;
-    
-            myList.push(wholeCode);
+            console.log("fitness1: " + fitness1);
+            if(fitness1){
+                let dnaF = fitness1.dnaF;
+                let dnaT = fitness1.dnaT;
+                let dnaS = fitness1.dnaS;
+                let dnaSl = fitness1.dnaSl;
+        
+                wholeCode = dnaF + "." + dnaT + "." + dnaS + "." + dnaSl;
+                console.log("whole code: " + wholeCode);
+                myList.push(wholeCode);
+                console.log("mylist" + myList);
+            }
         }
     
         let chromosome = new ChromosomeRepository();
         chromosome.chromo = myList;
+        console.log("finalChromosome:"+ chromosome.chromo);
         chromosome.fitness = totalFitness1;
         chromosome.fitnessHard = hfitnessValue1;
         chromosome.fitnessSoft = sfitnessValue1;
         console.log("mylist:", myList);
-        await chromosome.save(chromosome);
-        await fitness1Repo.deleteAll();
+        await chromosome.saveChromosome(chromosome);
+        // await fitness1Repo.deleteAll();
         
         let fitness2Repo = new Fitness2Repository();
         let count = await fitness2Repo.findAll().length;
         for(let i = 0; i < count; i++) {
             let fitness2 = await fitness2Repo.findByToken(i);
+            if(fitness2){
             let dnaF = fitness2.dnaF;
             let dnaT = fitness2.dnaT;
             let dnaS = fitness2.dnaS;
@@ -1330,6 +1356,7 @@ export class RoutineController{
     
             wholeCode1 = dnaF + "." + dnaT + "." + dnaS + "." + dnaSl;
             myList1.push(wholeCode1);
+            }
         }
     
         let chromosome1 = new ChromosomeRepository();
@@ -1339,8 +1366,8 @@ export class RoutineController{
         chromosome1.fitnessSoft = sfitnessValue2;
         console.log("mylist1:", myList1);
     
-        await chromosome1.save(chromosome1);
-        await fitness2Repo.deleteAll();
+        await chromosome1.saveChromosome(chromosome1);
+        // await fitness2Repo.deleteAll();
     }
     
     async storeCode(optimumFitness) {
@@ -1353,7 +1380,7 @@ export class RoutineController{
         let gene;
         let dna;
         gene = chromos.split(",");
-        for(let i = 0; i < 72; i++) {
+        for(let i = 0; i < gene.length; i++) {
             console.log("gene" + i + ":", gene[i].trim());
             dna = gene[i].split(".");
             for (let j = 0; j < 4; j++) {
