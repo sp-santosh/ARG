@@ -6,16 +6,16 @@ function intToBinary(n) {
   return n.toString(2);
 }
 
-
 export class SubjectRepository {
   async saveSubject(subject) {
-    
-    const test = await subjectRepository.save({...subject,code:"-"});
-    const binaryCode=intToBinary(test.id);
+    const test = await subjectRepository.save({ ...subject, code: "-" });
+    const binaryCode = intToBinary(test.id);
 
-    console.log({test,binaryCode});
-    await subjectRepository.update(Number(test.id), {...subject,code:binaryCode});
-      }
+    await subjectRepository.update(Number(test.id), {
+      ...subject,
+      code: binaryCode,
+    });
+  }
   async updateSubject(subject) {
     const subjectFound = await subjectRepository.findOne({
       where: { id: subject.id },
@@ -32,7 +32,6 @@ export class SubjectRepository {
     return subjectRepository.findOne({ where: { name } });
   }
 
-
   async findAllTSubject() {
     return subjectRepository.find();
   }
@@ -42,7 +41,4 @@ export class SubjectRepository {
 
     return subjectRepository.remove(subject);
   }
-
-
-
 }
