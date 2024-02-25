@@ -28,7 +28,7 @@ const Navbar = () => {
           <ul className="flex space-x-4">
             <li>
               <Link legacyBehavior href="/about">
-                About
+              <a className="text-gray-300 hover:text-white">About</a>
               </Link>
             </li>
             {isAuthenticatedUser ? (
