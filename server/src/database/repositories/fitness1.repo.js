@@ -14,6 +14,6 @@ export class Fitness1Repository {
     }
 
     async deleteAll(){
-        return await fitness1Repository.remove;
+        return await fitness1Repository.remove();
     }
 }

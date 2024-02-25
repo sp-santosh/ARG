@@ -44,8 +44,14 @@ export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
 };
 
 
-
 export const generateRoutineApiCall = async () => {
   const res = await axios.get(url.generate );
   return res.data;
+}
+
+export const fetchFaculties = async () => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/faculty`
+  );
+  return response.data;
 };
