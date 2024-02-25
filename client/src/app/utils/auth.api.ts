@@ -33,12 +33,6 @@ export const fetchSubjects = async () => {
   return response.data;
 };
 
-export const generateRoutine = async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/generate`
-  );
-  return response.data;
-};
 
 export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
   const [, data] = queryKey;
@@ -47,4 +41,11 @@ export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
   );
 
   return response.data;
+};
+
+
+
+export const generateRoutineApiCall = async () => {
+  const res = await axios.get(url.generate );
+  return res.data;
 };
