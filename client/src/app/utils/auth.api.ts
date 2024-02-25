@@ -48,3 +48,10 @@ export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
 
   return response.data;
 };
+
+export const fetchFaculties = async () => {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/faculty`
+  );
+  return response.data;
+};
