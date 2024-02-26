@@ -1,319 +1,182 @@
 "use client";
 
-import { useRef } from "react";
-import { DownloadTableExcel, useDownloadExcel } from "react-export-table-to-excel";
+import { useEffect, useRef, useState } from "react";
+import { useDownloadExcel } from "react-export-table-to-excel";
+import { useQuery } from "react-query";
+import { fetchFaculties, fetchRoutine } from "../utils/auth.api";
 
+const slots = [
+  { startTime: "07:10:00", endTime: "08:45:00" },
+  { startTime: "08:45:00", endTime: "10:15:00" },
+  { startTime: "11:00:00", endTime: "12:30:00" },
+  { startTime: "12:30:00", endTime: "14:00:00" },
+];
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+] as const;
 
-interface RoutineType {
-    monday: Slot[];
-    tuesday: Slot[];
-    wednesday: Slot[];
-    thursday: Slot[];
-    friday: Slot[];
-    saturday: Slot[];
-    sunday: Slot[];
-  }
-  
+type DayOfWeek = (typeof days)[number];
 
-  interface Slot {
-    id: string;
-    day: string;
-    subjectName: string;
-    teacherName: string;
-    faculty: string;
-    slot:string
+interface RoutineSlot {
+  id: string;
+  day: DayOfWeek;
+  subjectName: string;
+  teacherName: string;
+  faculty: string;
+  startTime: string;
+  endTime: string;
 }
 
+interface MappedSlot {
+  Sunday?: RoutineSlot[];
+  Monday?: RoutineSlot[];
+  Tuesday?: RoutineSlot[];
+  Wednesday?: RoutineSlot[];
+  Thursday?: RoutineSlot[];
+  Friday?: RoutineSlot[];
+}
 
-const ViewRoutine = ()=>{
+const ViewRoutine = () => {
+  const tableRef = useRef(null);
 
+  const [selectedFaculty, setSelectedFaculty] = useState("");
 
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: "Routine",
+    sheet: "routine",
+  });
 
-    const isLoading = false;
+  const { data: facultiesList, isLoading: facultyLoading } = useQuery(
+    "faculties",
+    fetchFaculties
+  );
 
+  const { data: routineData, isLoading } = useQuery(
+    ["routines", { faculty: selectedFaculty }],
+    fetchRoutine,
+    {
+      enabled: !!selectedFaculty,
+    }
+  );
 
-    const test = {
-       
-        sunday: [
-            {
-                id: "11",
-                day: "Sunday",
-                subjectName: "Physics",
-                teacherName: "David Brown",
-                faculty: "Science",
-                slot: "slot1"
-            },
-            {
-                id: "12",
-                day: "Sunday",
-                subjectName: "Math",
-                teacherName: "Emily Davis",
-                faculty: "Mathematics",
-                slot: "slot2"
-            },
-            {
-                id: "13",
-                day: "Sunday",
-                subjectName: "English",
-                teacherName: "Oliver Wilson",
-                faculty: "Arts",
-                slot: "slot3"
-            },
-            {
-                id: "14",
-                day: "Sunday",
-                subjectName: "Geography",
-                teacherName: "Sophia Martinez",
-                faculty: "Social Sciences",
-                slot: "slot4"
-            }
-        ],
-        monday: [
-            {
-                id: "15",
-                day: "Monday",
-                subjectName: "Chemistry",
-                teacherName: "Daniel Johnson",
-                faculty: "Science",
-                slot: "slot1"
-            },
-            {
-                id: "16",
-                day: "Monday",
-                subjectName: "Biology",
-                teacherName: "Emma Anderson",
-                faculty: "Science",
-                slot: "slot2"
-            },
-            {
-                id: "17",
-                day: "Monday",
-                subjectName: "History",
-                teacherName: "William Thompson",
-                faculty: "Social Sciences",
-                slot: "slot3"
-            },
-            {
-                id: "18",
-                day: "Monday",
-                subjectName: "Computer Science",
-                teacherName: "Olivia Harris",
-                faculty: "Technology",
-                slot: "slot4"
-            }
-        ],
-        tuesday: [
-            {
-                id: "19",
-                day: "Tuesday",
-                subjectName: "Physics",
-                teacherName: "James Clark",
-                faculty: "Science",
-                slot: "slot1"
-            },
-            {
-                id: "20",
-                day: "Tuesday",
-                subjectName: "Math",
-                teacherName: "Ava Lewis",
-                faculty: "Mathematics",
-                slot: "slot2"
-            },
-            {
-                id: "21",
-                day: "Tuesday",
-                subjectName: "English",
-                teacherName: "Noah Walker",
-                faculty: "Arts",
-                slot: "slot3"
-            },
-            {
-                id: "22",
-                day: "Tuesday",
-                subjectName: "Geography",
-                teacherName: "Isabella Green",
-                faculty: "Social Sciences",
-                slot: "slot4"
-            }
-        ],
-        wednesday: [
-            {
-                id: "23",
-                day: "Wednesday",
-                subjectName: "Chemistry",
-                teacherName: "Liam Hall",
-                faculty: "Science",
-                slot: "slot1"
-            },
-            {
-                id: "24",
-                day: "Wednesday",
-                subjectName: "Biology",
-                teacherName: "Mia Young",
-                faculty: "Science",
-                slot: "slot2"
-            },
-            {
-                id: "25",
-                day: "Wednesday",
-                subjectName: "History",
-                teacherName: "Benjamin Lee",
-                faculty: "Social Sciences",
-                slot: "slot3"
-            },
-            {
-                id: "26",
-                day: "Wednesday",
-                subjectName: "Computer Science",
-                teacherName: "Charlotte Turner",
-                faculty: "Technology",
-                slot: "slot4"
-            }
-        ],
-        thursday: [
-            {
-                id: "27",
-                day: "Thursday",
-                subjectName: "Physics",
-                teacherName: "Lucas King",
-                faculty: "Science",
-                slot: "slot1"
-            },
-            {
-                id: "28",
-                day: "Thursday",
-                subjectName: "Math",
-                teacherName: "Harper Scott",
-                faculty: "Mathematics",
-                slot: "slot2"
-            },
-            {
-                id: "29",
-                day: "Thursday",
-                subjectName: "English",
-                teacherName: "Ethan Adams",
-                faculty: "Arts",
-                slot: "slot3"
-            },
-            {
-                id: "30",
-                day: "Thursday",
-                subjectName: "Geography",
-                teacherName: "Amelia Baker",
-                faculty: "Social Sciences",
-                slot: "slot4"
-            }
-        ],
-        friday: [
-            {
-                id: "31",
-                day: "Friday",
-                subjectName: "Chemistry",
-                teacherName: "Logan Hill",
-                faculty: "Science",
-                slot: "slot1"
-            },
-            {
-                id: "32",
-                day: "Friday",
-                subjectName: "Biology",
-                teacherName: "Abigail Morris",
-                faculty: "Science",
-                slot: "slot2"
-            },
-            {
-                id: "33",
-                day: "Friday",
-                subjectName: "History",
-                teacherName: "Henry Turner",
-                faculty: "Social Sciences",
-                slot: "slot3"
-            },
-            {
-                id: "34",
-                day: "Friday",
-                subjectName: "Computer Science",
-                teacherName: "Ella Collins",
-                faculty: "Technology",
-                slot: "slot4"
-            }
-        ]
+  const facultyOptions =
+    facultiesList?.map((e: any) => ({
+      value: e.className,
+      id: e.id,
+    })) ?? [];
+
+  const mapper = () => {
+    const rawData: MappedSlot = {};
+    const typedData = routineData as RoutineSlot[];
+
+    if (typedData) {
+      typedData.forEach((item) => {
+        const { day, ...rest } = item;
+
+        if (!rawData[day]) {
+          rawData[day] = [];
+        }
+
+        rawData[day]?.push({ ...rest, day });
+      });
     }
 
-    const tableRef = useRef(null);
+    return rawData;
+  };
+  const groupedData = mapper();
 
+  const renderDays = (day: DayOfWeek) => {
+    return slots.map((slot) => {
+      const respectiveSlot = groupedData[day]?.find(
+        (item) => item.startTime === slot.startTime
+      );
 
-    const { onDownload } = useDownloadExcel({
-        currentTableRef: tableRef.current,
-        filename: 'Routine',
-        sheet: 'routine'
-    })
+      return (
+        <td
+          className=" font-light text-black dark:text-white border text-center"
+          key={slot.startTime}
+        >
+          {respectiveSlot ? (
+            <>
+              <p>{respectiveSlot.subjectName}</p>
+              <p>({respectiveSlot.teacherName})</p>
+            </>
+          ) : (
+            "-"
+          )}
+        </td>
+      );
+    });
+  };
 
+  return (
+    <>
+      <form className="max-w-sm mx-auto">
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Select an option
+        </label>
+        <select
+          id="faculty"
+          value={selectedFaculty}
+          onChange={(e) => setSelectedFaculty(e.target.value)}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option selected>Choose Faculty</option>
+          {facultyOptions.map((faculty: any) => (
+            <option key={faculty.id} value={faculty.id}>
+              {faculty.value}
+            </option>
+          ))}
+        </select>
+      </form>
 
-
-
- 
-
-
-    return (
-        <>
-<div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-
-
-
+      <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto" ref={tableRef}>
             <thead>
-              <tr className="bg-gray-2 text-left dark:bg-meta-4">
+              <tr className="bg-gray-2 text-left dark:bg-meta-4 ">
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                   Day
                 </th>
 
-                <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Slot 1
-                </th>
-                <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Slot 2
-                </th>
-                <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Slot 3
-                </th>
-                <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Slot 4
-                </th>
+                {slots.map((slot) => (
+                  <th
+                    className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white border"
+                    key={slot.startTime}
+                  >
+                    {slot.startTime}-{slot.endTime}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-                {Object.keys(test).map((day) => (
-                    <tr key={day}>
-                        <td className="py-4 px-4 font-medium text-black dark:text-white">{day}</td>
-                        <td className="py-4 px-4 font-medium text-black dark:text-white">{test?.[day]?.[0].subjectName} - {test?.[day]?.[0].teacherName}</td>
-                        <td className="py-4 px-4 font-medium text-black dark:text-white">{test?.[day]?.[1].subjectName} - {test?.[day]?.[1].teacherName}</td>
-                        <td className="py-4 px-4 font-medium text-black dark:text-white">{test?.[day]?.[2].subjectName} - {test?.[day]?.[2].teacherName}</td>
-                        <td className="py-4 px-4 font-medium text-black dark:text-white">{test?.[day]?.[3].subjectName} - {test?.[day]?.[3].teacherName}</td>
-
-              </tr>
-                ))}
-
-
-
-
-
-
-
-            
+              {days.map((day) => (
+                <tr key={day} className="border">
+                  <td className="py-4 px-4 font-medium text-black dark:text-white ">
+                    {day}
+                  </td>
+                  {renderDays(day)}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+      </div>
 
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        onClick={onDownload}
+      >
+        Export excel
+      </button>
+    </>
+  );
+};
 
-
-      </div>   
-      
-      
-        <button onClick={onDownload}> Export excel </button>
-</>
-)
-}
-
-export default ViewRoutine 
+export default ViewRoutine;
