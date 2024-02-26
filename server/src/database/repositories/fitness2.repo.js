@@ -14,6 +14,6 @@ export class Fitness2Repository {
     }
 
     async deleteAll(){
-        return await fitness2Repository.deleteMany({});
+        return await fitness2Repository.remove();
     }
 }
