@@ -10,6 +10,6 @@ export default new DataSource({
   database: environment.dbName,
   entities: ["src/database/entity/*.schema.js"],
   migrations: ["src/database/migration/*.js"],
-  logging: true,
+  logging: false,
   synchronize: false,
 });

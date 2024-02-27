@@ -68,7 +68,6 @@ export class RoutineController{
                                     if ((teacherStartTime <= startTime) && (teacherEndTime >= endTime)) {
                                         const cSubjectCode = collegeData.subjectCode;
                                         const cTeacherCode = collegeData.teacherCode;
-                                        locationCount++;
                                         chromosomeList.push(`${facultyCode}.${cTeacherCode}.${cSubjectCode}.${slotCode}`);
                                         console.log("Gene formed :" + chromosomeList);
                                         break;
@@ -78,6 +77,8 @@ export class RoutineController{
                             }
                     }
                 }
+                
+                locationCount++;
             }
             // Saving chromosome to the database
             const chromosome = new ChromosomeRepository();
@@ -145,8 +146,11 @@ export class RoutineController{
         chromo.fitnessSoft = fitnessValueS;
     
         await chromosomeRepoInstance.saveChromosome(chromo);
-    
+        let fitnessCount = await fitnessRepo.findAll().length;
+        if(fitnessCount > 0){
+            
         await fitnessRepo.deleteAll();
+        }
     }
 
     async hardConstraintH1() {
@@ -396,6 +400,7 @@ export class RoutineController{
 
                         await fitness1.save(fitness1);
                     } else {
+                        console.log('int i == 1');
                         let fitness2 = new Fitness2Repository();
                         fitness2.token = j;
                         fitness2.dnaF = dna[0].replace(/"/g, '');;
@@ -633,7 +638,7 @@ export class RoutineController{
         }
 
                 console.log("optimum:" + optimumFitness);
-                console.log("outside where loop");
+                console.log('test');
                 if(optimumFitness >= threshold) {
                     // Assuming you have a function `redirect` defined elsewhere in your code
                     await this.storeCode(optimumFitness);
@@ -1405,16 +1410,5 @@ export class RoutineController{
         }
         // redirect(action: "viewRoutine"); // You'll need to replace this with the equivalent in your Node.js environment
     }
-    
-    
-
-    
-    
-
-    
-    
-    
-
-
     
 }
