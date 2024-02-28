@@ -16,19 +16,19 @@ export class CollegeRepository {
   }
 
   async findCollegeById(id) {
-    return collegeRepository.findOne({ where: { id } });
+    return await collegeRepository.findOne({ where: { id } });
   }
 
   async findAll() {
-    return collegeRepository.find();
+    return await collegeRepository.find();
   }
 
   async findByCollegeCode(code) {
-    return collegeRepository.findOne({ where: { code } });
+    return await collegeRepository.findOne({ where: { code } });
   }
 
   async findByTeacherCode(teacherCode) {
-    return collegeRepository.findOne({ where: { teacherCode } });
+    return await collegeRepository.findOne({ where: { teacherCode } });
   }
 
   async findByTeacherCodeAndSubjectCodeAndFaculty(teacher, subject, faculty) {

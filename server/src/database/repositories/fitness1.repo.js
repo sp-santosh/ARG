@@ -10,10 +10,10 @@ export class Fitness1Repository {
     }
 
     async findByToken(token){
-        await fitness1Repository.findOne({where : {token}});
+       return await fitness1Repository.findOne({where : {token}});
     }
 
     async deleteAll(){
-        return await fitness1Repository.remove();
+        await fitness1Repository.clear();
     }
 }
