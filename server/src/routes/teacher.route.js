@@ -5,9 +5,9 @@ import { authenticate } from "../middleware/authentication.js";
 export const teacherRouter = Router();
 const teacherController = new TeacherController();
 
-teacherRouter.post("/",authenticate, teacherController.saveTeacher);
+teacherRouter.post("/", authenticate, teacherController.saveTeacher);
 
-teacherRouter.get("/:id", teacherController.getTeacherById);
-teacherRouter.get("/", teacherController.getTeacher);
+teacherRouter.get("/:id", authenticate, teacherController.getTeacherById);
+teacherRouter.get("/", authenticate, teacherController.getTeacher);
 teacherRouter.put("/:id", authenticate, teacherController.putTeacher);
-teacherRouter.delete("/:id", authenticate, teacherController.deleteTeacher)
+teacherRouter.delete("/:id", authenticate, teacherController.deleteTeacher);

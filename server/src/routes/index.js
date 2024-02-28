@@ -5,6 +5,7 @@ import { subjectRouter } from "./subject.route.js";
 import { routineRouter } from "./routine.route.js";
 import { collegeRouter } from "./college.route.js";
 import { facultyRouter } from "./faculty.route.js";
+import { slotRouter } from "./slot.route.js";
 
 export const indexRouter = Router();
 
@@ -13,5 +14,5 @@ indexRouter.use("/auth", userRouter);
 indexRouter.use("/subjects", subjectRouter);
 indexRouter.use("/generate", routineRouter);
 indexRouter.use("/college", collegeRouter);
-
 indexRouter.use("/faculty", facultyRouter);
+indexRouter.use("/slots", slotRouter);

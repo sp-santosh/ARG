@@ -8,9 +8,10 @@ export const routineRouter = Router();
 let routineController = new RoutineController();
 let routineViewController = new RoutineViewController();
 
-routineRouter.get("/view", routineViewController.getActualData);
+routineRouter.get("/view", authenticate, routineViewController.getActualData);
 
 routineRouter.get(
   "/",
+  authenticate,
   routineController.createChromosome.bind(routineController)
 );
