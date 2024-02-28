@@ -5,11 +5,12 @@ import express from "express";
 import { connectToDb } from "./db.js";
 import { indexRouter } from "./routes/index.js";
 import "./process.js";
+import { environment } from "./environment.js";
 
 const app = express();
 
 const server = http.createServer(app);
-const PORT = process.env["PORT"];
+const PORT = environment.port;
 
 app.use(express.json());
 app.use(cors());
