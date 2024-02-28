@@ -34,7 +34,6 @@ export const fetchSubjects = async () => {
   return response.data;
 };
 
-
 export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
   const [, data] = queryKey;
   const response = await axios.get(
@@ -44,11 +43,10 @@ export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
   return response.data;
 };
 
-
 export const generateRoutineApiCall = async () => {
-  const res = await axios.get(url.generate );
+  const res = await axios.get(url.generate);
   return res.data;
-}
+};
 
 export const fetchFaculties = async () => {
   const response = await authHttp({
@@ -68,5 +66,13 @@ export const fetchRoutine = async ({ queryKey }: { queryKey: any }) => {
     }
   );
 
+  return response.data;
+};
+
+export const fetchSlots = async () => {
+  const response = await authHttp({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/slots`,
+    method: "get",
+  });
   return response.data;
 };

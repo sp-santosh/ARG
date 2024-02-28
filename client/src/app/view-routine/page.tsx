@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import { useQuery } from "react-query";
-import { fetchFaculties, fetchRoutine } from "../utils/auth.api";
+import { fetchFaculties, fetchRoutine, fetchSlots } from "../utils/auth.api";
 import Navbar from "@/components/Navigation/Navbar";
 
 const slots = [
@@ -12,6 +12,12 @@ const slots = [
   { startTime: "13:00:00", endTime: "14:00:00" },
   { startTime: "14:00:00", endTime: "15:00:00" },
 ];
+
+interface SlotType {
+  startTime: string;
+  endTime: string;
+}
+
 const days = [
   "Sunday",
   "Monday",
@@ -55,11 +61,14 @@ const ViewRoutine = () => {
 
   const { data: facultiesList } = useQuery("faculties", fetchFaculties);
 
+  const { data: slots } = useQuery("slots", fetchSlots);
+
   const { data: routineData, isLoading } = useQuery(
     ["routines", { faculty: selectedFaculty }],
     fetchRoutine,
     {
       enabled: !!selectedFaculty,
+      refetchInterval: 60000,
     }
   );
 
@@ -90,7 +99,7 @@ const ViewRoutine = () => {
   const groupedData = mapper();
 
   const renderDays = (day: DayOfWeek) => {
-    return slots.map((slot) => {
+    return slots.map((slot: SlotType) => {
       const respectiveSlot = groupedData[day]?.find(
         (item) => item.startTime === slot.startTime
       );
@@ -148,7 +157,7 @@ const ViewRoutine = () => {
                         Day
                       </th>
 
-                      {slots.map((slot) => (
+                      {slots.map((slot: SlotType) => (
                         <th
                           className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white border"
                           key={slot.startTime}
