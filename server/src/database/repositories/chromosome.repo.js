@@ -19,4 +19,8 @@ export class ChromosomeRepository {
     async findByFitnessHard(fitnessHard){
         return await chromosomeRepository.findOne({ where: { fitnessHard } });
     }
+
+    async deleteAll(){
+        await chromosomeRepository.clear();
+    }
 }

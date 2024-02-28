@@ -12,6 +12,10 @@ import { SubjectRepository } from "../database/repositories/subject.repo.js";
 export class RoutineController{
 
     async createChromosome(req, res) {
+
+        let actualDataRepo = new ActualDataRepository();
+        await actualDataRepo.deleteAll();
+        
         let chromosomeCreationCount = 0;
         const slotRepositoryInstance = new SlotRepository();
         const collegeRepositoryInstance = new CollegeRepository();

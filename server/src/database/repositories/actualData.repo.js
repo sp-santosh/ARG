@@ -15,4 +15,8 @@ export class ActualDataRepository {
   async save(actualData) {
     await actualDataRepository.save(actualData);
   }
+
+  async deleteAll(){
+    await actualDataRepository.clear();
+  }
 }

@@ -7,10 +7,10 @@ import { fetchFaculties, fetchRoutine } from "../utils/auth.api";
 import Navbar from "@/components/Navigation/Navbar";
 
 const slots = [
-  { startTime: "07:10:00", endTime: "08:45:00" },
-  { startTime: "08:45:00", endTime: "10:15:00" },
-  { startTime: "11:00:00", endTime: "12:30:00" },
-  { startTime: "12:30:00", endTime: "14:00:00" },
+  { startTime: "09:00:00", endTime: "10:00:00" },
+  { startTime: "10:00:00", endTime: "11:00:00" },
+  { startTime: "13:00:00", endTime: "14:00:00" },
+  { startTime: "14:00:00", endTime: "15:00:00" },
 ];
 const days = [
   "Sunday",
