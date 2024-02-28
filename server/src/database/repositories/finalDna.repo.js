@@ -10,6 +10,6 @@ export class FinalDnaRepository {
     }
 
     async findByToken(token){
-        await finalDnaRepository.findOne({where : {token}});
+        return await finalDnaRepository.findOne({where : {token}});
     }
 }

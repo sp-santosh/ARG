@@ -25,15 +25,15 @@ export class SubjectRepository {
   }
 
   async findSubjectById(id) {
-    return subjectRepository.findOne({ where: { id } });
+    return await subjectRepository.findOne({ where: { id } });
   }
 
   async findSubjectByName(name) {
-    return subjectRepository.findOne({ where: { name } });
+    return await subjectRepository.findOne({ where: { name } });
   }
 
   async findAllTSubject() {
-    return subjectRepository.find();
+    return await subjectRepository.find();
   }
 
   async deleteSubject(id) {

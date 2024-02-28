@@ -22,20 +22,20 @@ export class TeacherRepository {
   }
 
   async findTeacherById(id) {
-    return teacherRepository.findOne({ where: { id } });
+    return await teacherRepository.findOne({ where: { id } });
   }
 
   async findTeacherByName(name) {
-    return teacherRepository.findOne({ where: { name } });
+    return await teacherRepository.findOne({ where: { name } });
   }
 
   async findAllTeachers() {
-    return teacherRepository.find();
+    return await teacherRepository.find();
   }
 
   async deleteTeacher(id) {
     const teacher = await teacherRepository.findOne({ where: { id } });
 
-    return teacherRepository.remove(teacher);
+    return await teacherRepository.remove(teacher);
   }
 }
