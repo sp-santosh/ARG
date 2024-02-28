@@ -14,8 +14,10 @@ export class RoutineController{
     async createChromosome(req, res) {
 
         let actualDataRepo = new ActualDataRepository();
+        let chromoRepo = new ChromosomeRepository();
         await actualDataRepo.deleteAll();
-        
+        await chromoRepo.deleteAll();
+
         let chromosomeCreationCount = 0;
         const slotRepositoryInstance = new SlotRepository();
         const collegeRepositoryInstance = new CollegeRepository();
