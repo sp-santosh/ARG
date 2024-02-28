@@ -1,5 +1,6 @@
 "use client";
 
+import useAuth from "@/components/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 

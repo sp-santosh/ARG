@@ -4,6 +4,7 @@ import { fetchTeachers } from "../utils/auth.api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authHttp } from "../utils/http";
+import Navbar from "@/components/Navigation/Navbar";
 
 type teacher = {
   id: string;
@@ -59,9 +60,11 @@ const TeachersListing = () => {
 
   return (
     <>
+      <Navbar />
+
       <button
-  className="text-2xl font-bold text-center my-4 py-2 px-4 bg-indigo-600 text-white rounded-lg shadow-md float-right mb-4"
-  onClick={() => push("/teachers/add")}
+        className="text-2xl font-bold text-center my-4 py-2 px-4 bg-indigo-600 text-white rounded-lg shadow-md float-right mb-4"
+        onClick={() => push("/teachers/add")}
       >
         Add New Teacher{" "}
       </button>

@@ -4,13 +4,14 @@ import { fetchSubjects } from "../utils/auth.api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authHttp } from "../utils/http";
+import Navbar from "@/components/Navigation/Navbar";
 
 type subject = {
   id: string;
   name: string;
-  faculty:string;
-  semester:string;
-  code:string;
+  faculty: string;
+  semester: string;
+  code: string;
 };
 
 const SubjectsListing = () => {
@@ -56,12 +57,13 @@ const SubjectsListing = () => {
 
   return (
     <>
-     <button
-  className="text-2xl font-bold text-center my-4 py-2 px-4 bg-indigo-600 text-white rounded-lg shadow-md float-right mb-4"
-  onClick={() => push("/subjects/add")}
->
-  Add New Subject
-</button>
+      <Navbar />
+      <button
+        className="text-2xl font-bold text-center my-4 py-2 px-4 bg-indigo-600 text-white rounded-lg shadow-md float-right mb-4"
+        onClick={() => push("/subjects/add")}
+      >
+        Add New Subject
+      </button>
 
       {showModal ? (
         <>

@@ -20,14 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="!scroll-smooth" suppressHydrationWarning={true}>
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <header>
-            <Navbar />
-          </header>
-          {children}
-        </ReactQueryProvider>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );

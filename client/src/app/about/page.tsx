@@ -1,4 +1,5 @@
 "use client";
+import Navbar from "@/components/Navigation/Navbar";
 import Head from "next/head";
 
 export default function About() {
@@ -11,6 +12,7 @@ export default function About() {
           content="Learn more about the College Routine Generator project"
         />
       </Head>
+      <Navbar />
 
       <header className="bg-blue-600 text-white text-center py-10">
         <h1 className="text-5xl font-bold">About the Routine Generator</h1>

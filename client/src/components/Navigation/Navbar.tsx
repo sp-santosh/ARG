@@ -2,19 +2,37 @@
 "use client";
 import Link from "next/link";
 import useAuth from "../hooks/useAuth"; // Ensure this path is correct
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+const AUTH_ROUTES = [
+  "/college",
+  "/generator",
+  "/teacher",
+  "/subjects",
+  "/view-routine",
+];
 
 const Navbar = () => {
   const { user, logout, isAuthenticatedUser } = useAuth();
 
-  console.log({ isAuthenticatedUser });
-
   const router = useRouter();
+  const pathname = usePathname();
 
   const logoutCLick = () => {
     router.push("/");
     logout();
   };
+
+  useEffect(() => {
+    if (
+      !isAuthenticatedUser &&
+      pathname &&
+      AUTH_ROUTES.some((route) => pathname.includes(route))
+    ) {
+      router.push("/");
+    }
+  }, [isAuthenticatedUser, pathname]);
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -28,11 +46,17 @@ const Navbar = () => {
           <ul className="flex space-x-4">
             <li>
               <Link legacyBehavior href="/about">
-              <a className="text-gray-300 hover:text-white">About</a>
+                <a className="text-gray-300 hover:text-white">About</a>
               </Link>
             </li>
             {isAuthenticatedUser ? (
               <>
+                <li>
+                  <Link legacyBehavior href="/college">
+                    <a className="text-gray-300 hover:text-white">College</a>
+                  </Link>
+                </li>
+
                 <li>
                   <Link legacyBehavior href="/generator">
                     <a className="text-gray-300 hover:text-white">Generator</a>

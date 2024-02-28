@@ -13,7 +13,7 @@ interface User {
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
 
-  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(false);
+  const [isAuthenticatedUser, setIsAuthenticatedUser] = useState(true);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("user");
