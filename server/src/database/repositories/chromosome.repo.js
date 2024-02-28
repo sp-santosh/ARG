@@ -3,7 +3,9 @@ const chromosomeRepository = dataSource.getRepository("Chromosome");
 export class ChromosomeRepository {
 
     async findAll() {
-        return await chromosomeRepository.find();
+        return await chromosomeRepository.createQueryBuilder("chromosome")
+        .orderBy("chromosome.fitness", "DESC")
+        .getMany();
     }
 
     async saveChromosome(chromosome) {

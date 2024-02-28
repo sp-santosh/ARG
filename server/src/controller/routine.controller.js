@@ -396,11 +396,10 @@ export class RoutineController{
             let chromosomeRepo = new ChromosomeRepository();
             let fitnessRepo = new FitnessRepository();
             let slotRepo = new SlotRepository();
-            let chromosome = await chromosomeRepo.findAll({ sort: "fitness", order: "desc" });
+            let chromosome = await chromosomeRepo.findAll();
+            console.log("Chromosome: " + JSON.stringify(chromosome));
             let chromo = chromosome.map(c => c.chromo);
             for (let i = 0; i < 2; i++) {
-                
-                console.log('int i ==' + i + " chromosome fitness and id:" + chromosome.fitness + " "+ chromosome.id);
                 let chromos = chromo[i].substring(1, chromo[i].length - 1).replace(/\s/g, "");
 
                 let gene;
@@ -476,11 +475,12 @@ export class RoutineController{
                 let tStart2;
                 let tEnd2;
                 let indicator2 = fitnessDna2.indicator;
+                
+                let collegeRepo = new CollegeRepository();
 
                 if(dnaF1 === dnaF2) {
                     if ((indicator1 === 1) || (indicator2 === 1)) {
                     if (randnum1 < 3) {
-                        let collegeRepo = new CollegeRepository();
                         let collegeReference1 = await collegeRepo.findByTeacherCode(dnaT1);
                         let tStart1, tEnd1;
                         if (randnumFitness1 <= 11) {
