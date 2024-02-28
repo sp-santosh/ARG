@@ -11,15 +11,19 @@ export const FitnessSchema = new EntitySchema({
     },
     token: {
       type: "int",
+      nullable: true,
     },
     dnaT: {
       type: "varchar",
+      nullable: true,
     },
     dnaS: {
       type: "varchar",
+      nullable: true,
     },
     dnaC: {
       type: "varchar",
+      nullable: true,
     },
   },
 });
