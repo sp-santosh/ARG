@@ -6,13 +6,6 @@ import { useQuery } from "react-query";
 import { fetchFaculties, fetchRoutine, fetchSlots } from "../utils/auth.api";
 import Navbar from "@/components/Navigation/Navbar";
 
-const slots = [
-  { startTime: "09:00:00", endTime: "10:00:00" },
-  { startTime: "10:00:00", endTime: "11:00:00" },
-  { startTime: "13:00:00", endTime: "14:00:00" },
-  { startTime: "14:00:00", endTime: "15:00:00" },
-];
-
 interface SlotType {
   startTime: string;
   endTime: string;
