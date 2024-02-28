@@ -28,6 +28,10 @@ export class SubjectRepository {
     return await subjectRepository.findOne({ where: { id } });
   }
 
+  async findByCode(code){
+    return await subjectRepository.findOne({ where: { code } });
+  }
+
   async findSubjectByName(name) {
     return await subjectRepository.findOne({ where: { name } });
   }

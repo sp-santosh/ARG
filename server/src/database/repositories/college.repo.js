@@ -32,7 +32,7 @@ export class CollegeRepository {
   }
 
   async findByTeacherCodeAndSubjectCodeAndFaculty(teacher, subject, faculty) {
-    return await collegeRepo.findOne({
+    return await collegeRepository.findOne({
       where: { teacherCode: teacher, subjectCode: subject, faculty: faculty },
     });
   }

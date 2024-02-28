@@ -13,6 +13,6 @@ export class ActualDataRepository {
   }
 
   async save(actualData) {
-    await await actualDataRepository.save(actualData);
+    await actualDataRepository.save(actualData);
   }
 }
