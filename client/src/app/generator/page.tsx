@@ -15,6 +15,8 @@ const GenerateRoutine = () => {
       setIsLoading(false);
       router.push("/view-routine");
     } catch (err) {
+      router.push("/view-routine");
+
       console.log(err);
       setIsLoading(false);
     }
