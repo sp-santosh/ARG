@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { authHttp } from "@/app/utils/http";
-import { fetchSubjectsById, fetchTeachersById } from "@/app/utils/auth.api";
+import {
+  fetchFaculties,
+  fetchSubjectsById,
+  fetchTeachersById,
+} from "@/app/utils/auth.api";
 import { useQuery } from "react-query";
 import { useParams, useRouter } from "next/navigation";
 
@@ -24,6 +28,14 @@ function SubjectForm() {
   } = useQuery(["subjectedit", { id: params.id }], fetchSubjectsById, {
     enabled: !!params.id,
   });
+
+  const { data: facultiesList } = useQuery("faculties", fetchFaculties);
+
+  const facultyOptions =
+    facultiesList?.map((e: any) => ({
+      value: e.className,
+      id: e.id,
+    })) ?? [];
 
   useEffect(() => {
     if (subjectsDetails) {
@@ -101,10 +113,11 @@ function SubjectForm() {
             Select your option
           </option>
 
-          <option value="BCS-B">BCS-B</option>
-          <option value="BCS-A">BCS-A</option>
-
-          <option value="BCU">BCU</option>
+          {facultyOptions.map((faculty: any) => (
+            <option key={faculty.id} value={faculty.value}>
+              {faculty.value}
+            </option>
+          ))}
         </select>
       </div>
 
