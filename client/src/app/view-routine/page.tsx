@@ -176,7 +176,7 @@ const ViewRoutine = () => {
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
                   onClick={onDownload}
                 >
-                  Export excel
+                  Export Routine to excel
                 </button>
               </div>
             ) : (

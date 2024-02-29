@@ -83,7 +83,7 @@ const CollagePage: React.FC = () => {
 
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div className="p-6 bg-white rounded shadow-md w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-4 text-center">Collage Page</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center">College Assign Page</h1>
 
           <div className="flex flex-col items-start mb-4 w-full">
             <label

@@ -215,7 +215,7 @@ const SubjectsListing = () => {
                             />
                           </svg>
                         </button>
-                        <button className="hover:text-primary">
+                        {/* <button className="hover:text-primary">
                           <svg
                             className="fill-current"
                             width="18"
@@ -233,7 +233,7 @@ const SubjectsListing = () => {
                               fill=""
                             />
                           </svg>
-                        </button>
+                        </button> */}
                       </div>
                     </td>
                   </tr>

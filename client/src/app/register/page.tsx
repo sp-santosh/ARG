@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Navbar from "@/components/Navigation/Navbar";
+import Image from "next/image";
+import regimg from "../../../assets/registration.gif"
+
 export default function Register() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,51 +31,57 @@ export default function Register() {
   };
 
   return (
-    <div> <Navbar />  
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="p-8 bg-white shadow-md rounded-md">
-        <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
-          Register
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="text"
-              placeholder="Username"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
-            />
+    <div>
+      <Navbar />
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="flex">
+          <div className="w-1/2">
+            <Image src={regimg} alt="Your Image" />
           </div>
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
-            />
-          </div>
-          <div className="text-center">
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:bg-blue-700 focus:outline-none"
-            >
+          <div className="p-8 bg-white shadow-md rounded-md w-1/2">
+            <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
               Register
-            </button>
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
+                />
+              </div>
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:bg-blue-700 focus:outline-none"
+                >
+                  Register
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
