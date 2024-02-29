@@ -83,82 +83,94 @@ const CollagePage: React.FC = () => {
 
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div className="p-6 bg-white rounded shadow-md w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-4 text-center">College Assign Page</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center">
+            College Assign Page
+          </h1>
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto my-8">
+            <div className="flex flex-col items-start mb-4 w-full">
+              <label
+                htmlFor="faculty"
+                className="mb-2 font-bold text-lg text-gray-900"
+              >
+                Faculty:
+              </label>
+              <select
+                required
+                id="faculty"
+                value={selectedFaculty}
+                onChange={(e) => setSelectedFaculty(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+              >
+                <option value="" disabled selected>
+                  Select your option
+                </option>{" "}
+                {facultyOptions.map((faculty: any) => (
+                  <option key={faculty.id} value={faculty.id}>
+                    {faculty.value}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex flex-col items-start mb-4 w-full">
-            <label
-              htmlFor="faculty"
-              className="mb-2 font-bold text-lg text-gray-900"
-            >
-              Faculty:
-            </label>
-            <select
-              id="faculty"
-              value={selectedFaculty}
-              onChange={(e) => setSelectedFaculty(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            >
-              <option value="">Select Faculty</option>
-              {facultyOptions.map((faculty: any) => (
-                <option key={faculty.id} value={faculty.id}>
-                  {faculty.value}
+            <div className="flex flex-col items-start mb-4 w-full">
+              <label
+                htmlFor="teacher"
+                className="mb-2 font-bold text-lg text-gray-900"
+              >
+                Teacher:
+              </label>
+              <select
+                required
+                id="teacher"
+                value={selectedTeacher}
+                onChange={(e) => setSelectedTeacher(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+              >
+                <option value="" disabled selected>
+                  Select your option
                 </option>
-              ))}
-            </select>
-          </div>
 
-          <div className="flex flex-col items-start mb-4 w-full">
-            <label
-              htmlFor="teacher"
-              className="mb-2 font-bold text-lg text-gray-900"
-            >
-              Teacher:
-            </label>
-            <select
-              id="teacher"
-              value={selectedTeacher}
-              onChange={(e) => setSelectedTeacher(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            >
-              <option value="">Select Teacher</option>
-              {teacherOptions.map((teacher: any) => (
-                <option key={teacher.id} value={teacher.id}>
-                  {teacher.value}
-                </option>
-              ))}
-            </select>
-          </div>
+                {teacherOptions.map((teacher: any) => (
+                  <option key={teacher.id} value={teacher.id}>
+                    {teacher.value}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex flex-col items-start mb-4 w-full">
-            <label
-              htmlFor="subject"
-              className="mb-2 font-bold text-lg text-gray-900"
-            >
-              Subject:
-            </label>
-            <select
-              id="subject"
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
-            >
-              <option value="">Select Subject</option>
-              {subjectOptions.map((subject: any) => (
-                <option key={subject.id} value={subject.id}>
-                  {subject.value}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={handleSubmit}
-              type="submit"
-              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
-            >
-              Submit
-            </button>
-          </div>
+            <div className="flex flex-col items-start mb-4 w-full">
+              <label
+                htmlFor="subject"
+                className="mb-2 font-bold text-lg text-gray-900"
+              >
+                Subject:
+              </label>
+              <select
+                id="subject"
+                required
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm w-full"
+              >
+                <option value="" disabled selected>
+                  Select your option
+                </option>{" "}
+                {subjectOptions.map((subject: any) => (
+                  <option key={subject.id} value={subject.id}>
+                    {subject.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>

@@ -12,39 +12,51 @@ export const login = async (email: string, password: string) => {
 };
 
 export const fetchTeachers = async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/teachers`
-  );
+  const response = await authHttp({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/teachers`,
+    method: "get",
+  });
+
   return response.data;
 };
 
 export const fetchTeachersById = async ({ queryKey }: { queryKey: any }) => {
   const [, data] = queryKey;
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/teachers/${data.id}`
-  );
+
+  const response = await authHttp({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/teachers/${data.id}`,
+    method: "get",
+  });
 
   return response.data;
 };
 
 export const fetchSubjects = async () => {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/subjects`
-  );
+  const response = await authHttp({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/subjects`,
+    method: "get",
+  });
+
   return response.data;
 };
 
 export const fetchSubjectsById = async ({ queryKey }: { queryKey: any }) => {
   const [, data] = queryKey;
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/subjects/${data.id}`
-  );
+
+  const response = await authHttp({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/subjects/${data.id}`,
+    method: "get",
+  });
 
   return response.data;
 };
 
 export const generateRoutineApiCall = async () => {
-  const res = await axios.get(url.generate);
+  const res = await authHttp({
+    url: url.generate,
+    method: "get",
+  });
+
   return res.data;
 };
 
@@ -59,12 +71,11 @@ export const fetchFaculties = async () => {
 export const fetchRoutine = async ({ queryKey }: { queryKey: any }) => {
   const [, data] = queryKey;
 
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/generate/view`,
-    {
-      params: { faculty: data.faculty },
-    }
-  );
+  const response = await authHttp({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/generate/view`,
+    method: "get",
+    params: { faculty: data.faculty },
+  });
 
   return response.data;
 };

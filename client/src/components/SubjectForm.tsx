@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 import axios from "axios";
@@ -6,7 +5,6 @@ import { authHttp } from "@/app/utils/http";
 import { fetchSubjectsById, fetchTeachersById } from "@/app/utils/auth.api";
 import { useQuery } from "react-query";
 import { useParams, useRouter } from "next/navigation";
-
 
 function SubjectForm() {
   const router = useRouter();
@@ -33,8 +31,7 @@ function SubjectForm() {
         name: subjectsDetails.name,
         faculty: subjectsDetails.faculty,
         semester: subjectsDetails.semester,
-        code: subjectsDetails.code
-       
+        code: subjectsDetails.code,
       });
     }
   }, [subjectsDetails]);
@@ -86,49 +83,57 @@ function SubjectForm() {
 
       {/* Faculty */}
       <div className="mb-4">
-  <label
-    htmlFor="faculty"
-    className="block text-sm font-medium text-gray-600"
-  >
-    Faculty:
-  </label>
-  <select
-    id="faculty"
-    name="faculty"
-    value={subject.faculty}
-    onChange={handleChange}
-    className="mt-1 p-2 border rounded-md w-full"
-    required
-  >
-    <option value="BCS">BCS</option>
-    <option value="BCU">BCU</option>
-  </select>
-</div>
+        <label
+          htmlFor="faculty"
+          className="block text-sm font-medium text-gray-600"
+        >
+          Faculty:
+        </label>
+        <select
+          id="faculty"
+          name="faculty"
+          value={subject.faculty}
+          onChange={handleChange}
+          className="mt-1 p-2 border rounded-md w-full"
+          required
+        >
+          <option value="" disabled selected>
+            Select your option
+          </option>
+
+          <option value="BCS-B">BCS-B</option>
+          <option value="BCS-A">BCS-A</option>
+
+          <option value="BCU">BCU</option>
+        </select>
+      </div>
 
       {/* Semester */}
       <div className="mb-4">
-  <label
-    htmlFor="semester"
-    className="block text-sm font-medium text-gray-600"
-  >
-    Semester:
-  </label>
-  <select
-  id="semester"
-  name="semester"
-  value={subject.semester}
-  onChange={handleChange}
-  className="mt-1 p-2 border rounded-md w-full"
-  required
->
-  {Array.from({ length: 6 }, (_, index) => (
-    <option key={index + 1} value={index + 1}>
-      {index + 1}
-    </option>
-  ))}
-</select>
-</div>
-
+        <label
+          htmlFor="semester"
+          className="block text-sm font-medium text-gray-600"
+        >
+          Semester:
+        </label>
+        <select
+          id="semester"
+          name="semester"
+          value={subject.semester}
+          onChange={handleChange}
+          className="mt-1 p-2 border rounded-md w-full"
+          required
+        >
+          <option value="" disabled selected>
+            Select your option
+          </option>
+          {Array.from({ length: 6 }, (_, index) => (
+            <option key={index + 1} value={index + 1}>
+              {index + 1}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Code */}
       {/* <div className="mb-4">
@@ -155,7 +160,7 @@ function SubjectForm() {
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
-          Add Subject
+          Save
         </button>
       </div>
     </form>
