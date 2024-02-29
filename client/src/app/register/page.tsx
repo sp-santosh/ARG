@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import Navbar from "@/components/Navigation/Navbar";
 export default function Register() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ export default function Register() {
   };
 
   return (
+    <div> <Navbar />  
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="p-8 bg-white shadow-md rounded-md">
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
@@ -70,6 +72,7 @@ export default function Register() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

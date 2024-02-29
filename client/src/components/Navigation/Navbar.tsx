@@ -56,6 +56,11 @@ const Navbar = () => {
                     <a className="text-gray-300 hover:text-white">College</a>
                   </Link>
                 </li>
+                <li>
+                  <Link legacyBehavior href="/view-routine">
+                    <a className="text-gray-300 hover:text-white">View Routine</a>
+                  </Link>
+                </li>
 
                 <li>
                   <Link legacyBehavior href="/generator">

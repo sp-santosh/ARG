@@ -402,7 +402,7 @@ export class RoutineController{
     async calculateThreshold() {
         let collegeRepo = new CollegeRepository();
         let collegeThreshold = await collegeRepo.findAll();
-        const thresholdFinal = 720 + 720 + collegeThreshold.length * 10 - 200;
+        const thresholdFinal = 720 + 720 + collegeThreshold.length * 10 - 100;
         const threshold = thresholdFinal;
         console.log('Threshold: ' + threshold);
         return threshold;
@@ -1426,10 +1426,13 @@ export class RoutineController{
             }
     
             await actualData.save(actualData);
+
         }
+        console.log("Routine Generated Successfully");
         }
+        
         // res.status(200).json({ message: 'Chromosome created successfully' });
-        // redirect(action: "viewRoutine"); // You'll need to replace this with the equivalent in your Node.js environment
+        // redirect(action: "viewRoutine"); 
     }
     
 }

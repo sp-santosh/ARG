@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import isAuth from "../utils/isAuth";
 import { login } from "../utils/auth.api";
+import Image from "next/image";
+import logimg from "../../../assets/image.gif";
+import Navbar from "@/components/Navigation/Navbar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,40 +27,48 @@ export default function Login() {
   };
 
   return (
+    <div><Navbar />
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="p-8 bg-white shadow-md rounded-md">
-        <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
-          Login
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
-            />
-          </div>
-          <div className="text-center">
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:bg-blue-700 focus:outline-none"
-            >
-              Login
-            </button>
-          </div>
-        </form>
+      
+      <div className="flex">
+        <div className="w-1/2">
+          <Image src={logimg} alt="Image" width={500} height={100}/>
+        </div>
+        <div className="p-8 bg-white shadow-md rounded-md w-1/2">
+          <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
+            Login
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full px-4 py-2 border rounded-md text-gray-700 focus:border-blue-500 focus:outline-none focus:ring"
+              />
+            </div>
+            <div className="text-center">
+              <button
+                type="submit"
+                className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:bg-blue-700 focus:outline-none"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
+    </div>
     </div>
   );
 }
