@@ -402,7 +402,7 @@ export class RoutineController{
     async calculateThreshold() {
         let collegeRepo = new CollegeRepository();
         let collegeThreshold = await collegeRepo.findAll();
-        const thresholdFinal = 720 + 720 + collegeThreshold.length * 10 - 100;
+        const thresholdFinal = 720 + 720 + collegeThreshold.length * 10 - 130;
         const threshold = thresholdFinal;
         console.log('Threshold: ' + threshold);
         return threshold;
